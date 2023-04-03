@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "245653185648",
+    "firebase_url": "https://bersihmasjid-60595-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "bersihmasjid-60595",
+    "storage_bucket": "bersihmasjid-60595.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245653185648:android:38403d54393133049240b5",
+        "android_client_info": {
+          "package_name": "com.app.bersihmasjid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245653185648-4s8d35rtp8otel25tklb2it89fd8hvg4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALzrE8SoUjGjkJeSgu6ezP9N53_2NzfFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245653185648-4s8d35rtp8otel25tklb2it89fd8hvg4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

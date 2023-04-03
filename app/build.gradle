@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.application'
+    // Add the Google services Gradle plugin
+    id 'com.google.gms.google-services'
+}
+
+android {
+    buildFeatures {
+        viewBinding true
+    }
+    namespace 'com.app.bersihmasjid'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.app.bersihmasjid"
+        minSdk 21
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation platform('com.google.firebase:firebase-bom:31.2.3')
+    // Add the dependency for the Firebase Authentication library
+    implementation 'com.google.firebase:firebase-auth'
+    // Add the dependency for the Firebase Analytics
+    implementation 'com.google.firebase:firebase-analytics'
+    // Add the dependency for the Realtime Database library
+    implementation 'com.google.firebase:firebase-database'
+    //Add the depedency for OpenStreetMap
+    implementation 'org.osmdroid:osmdroid-android:6.1.15'
+    //OpenStreetMap bonuspack
+    //implementation  name:'osmbonuspack_6.9.0', ext:'aar'
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation 'org.apache.commons:commons-lang3:3.8.1'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+    // Add this in addition to your other dependencies
+    implementation "androidx.activity:activity:1.6.0-alpha05"
+
+}
+

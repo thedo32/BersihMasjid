@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/custom_text_white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:gravity="center_horizontal"
+        android:text="@string/edit_diary_caps"
+        android:textSize="20sp"
+        android:textColor="#FFE80404"
+        tools:ignore="VisualLintOverlap" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/title"
+            android:hint="@string/title"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@color/black"
+            android:drawablePadding="5dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColorHint="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_text"
+            android:inputType="textCapWords"
+            android:importantForAutofill="no"
+            tools:ignore="VisualLintTextFieldSize" />
+        <!--android:drawableLeft="@drawable/email"-->
+
+        <EditText
+            android:id="@+id/description"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@color/black"
+            android:hint="@string/description_hint"
+            android:drawablePadding="5dp"
+            android:layout_marginTop="125dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress|textMultiLine"
+            android:maxLines="10"
+            android:minLines="10"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_text"
+            android:importantForAutofill="no"
+            tools:ignore="VisualLintTextFieldSize" />
+        <!--android:drawableLeft="@drawable/password" > -->
+
+        <EditText
+            android:id="@+id/lat"
+            android:hint="@string/titik_lokasi"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@color/black"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="500dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColorHint="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_text"
+            android:autofillHints="0.000"
+            android:inputType="textCapWords"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <EditText
+            android:id="@+id/lon"
+            android:hint="@string/titik_lokasi"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@color/black"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="570dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColorHint="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_text"
+            android:autofillHints="0.000"
+            android:inputType="textCapWords"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/submit_edit"
+            android:src="@drawable/baseline_update_24"
+            app:rippleColor="@color/teal_200"
+            tools:ignore="ImageContrastCheck" />
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

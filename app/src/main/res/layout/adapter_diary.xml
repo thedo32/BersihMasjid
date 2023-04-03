@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
+        app:cardPreventCornerOverlap="true"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title"
+                android:text="@string/title"
+                android:textColor="@color/black"
+                android:layout_marginBottom="5dp"
+                android:textSize="21sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:minHeight="48dp"
+                android:text="@string/description"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:text="@string/_12_januari_2025"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="RelativeOverlap,SmallSp" />
+
+                <ImageView
+                    android:id="@+id/maps"
+                    android:src="@drawable/maps"
+                    android:layout_alignParentEnd="true"
+                    android:paddingEnd="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="RtlSymmetry"
+                    android:contentDescription="@string/map_dashboard" />
+
+                <ImageView
+                    android:id="@+id/delete"
+                    android:src="@drawable/close"
+                    android:layout_alignParentEnd="true"
+                    android:paddingEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="RtlSymmetry"
+                    android:contentDescription="@string/delete_diary" />
+
+                <ImageView
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/delete"
+                    android:contentDescription="@string/edit_diary"
+                    android:paddingEnd="20dp"
+                    android:src="@drawable/edit"
+                    tools:ignore="RtlSymmetry" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
