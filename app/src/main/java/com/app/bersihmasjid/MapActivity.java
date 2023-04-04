@@ -72,6 +72,7 @@ public class MapActivity extends AppCompatActivity {
     String Londd;
     ActivityMapBinding binding;
     SharedPreferences.Editor editor;
+    String imagepath;
 
 
 
@@ -106,10 +107,17 @@ public class MapActivity extends AppCompatActivity {
         setContentView(view);
         mapView = binding.mapview;
 
+
         referenceui.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String link = dataSnapshot.child("logo").getValue(
+                if (desc.equals("Pusat Pemko Padang")){
+                    imagepath = "logopadang";
+                }else{
+                    imagepath = "logo";
+                }
+
+                String link = dataSnapshot.child(imagepath).getValue(
                         String.class);
 
                 Picasso.get().load(link).into(binding.appCompatImageView);
@@ -118,6 +126,7 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+
 
 
 
@@ -152,14 +161,16 @@ public class MapActivity extends AppCompatActivity {
 
         String url = "https://www.google.com/maps/search/?api=1&query="+Latdd+","+Londd;
 
-        /*if (desc.equals("Pusat Pemko Padang")){
-            startMarker.setImage(getResources().getDrawable(R.drawable.logopadang));
-        }else{
-            startMarker.setImage(getResources().getDrawable(R.drawable.logo));
-        }*/
+
 
        GeoPoint currentLocation = new GeoPoint( Double.parseDouble(Latdd) , Double.parseDouble(Londd), 10);
-       startMarker.setIcon(getResources().getDrawable(R.drawable.mosque));
+
+        if (desc.equals("Pusat Pemko Padang")){
+            startMarker.setIcon(getResources().getDrawable(R.drawable.building));
+        }else{
+            startMarker.setIcon(getResources().getDrawable(R.drawable.mosque));
+        }
+
 
        startMarker.setTitle("Detail Lokasi: \n"+desc+ "\n\n Titik GPS: \n" + currentLocation);
        startMarker.setPosition(currentLocation);
