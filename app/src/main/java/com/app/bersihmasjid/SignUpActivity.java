@@ -52,9 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(view);
         dialog = new ProgressDialog( SignUpActivity.this);
         auth = FirebaseAuth.getInstance();
-        reference = FirebaseDatabase.getInstance
-                ("https://bersihmasjid-60595-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference
-                ( "UserDiary");
+        reference = FirebaseDatabase.getInstance().getReference( "UserDiary");
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         editor = preferences.edit();
 

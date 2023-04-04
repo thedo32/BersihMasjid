@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,13 +20,16 @@ import com.app.bersihmasjid.model.ModelDiary;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -53,6 +57,8 @@ public class MapActivity extends AppCompatActivity {
     private ScaleBarOverlay mScaleBarOverlay;
     ItemizedIconOverlay<OverlayItem> currentLocationOverlay;
     SharedPreferences preferences;
+    DatabaseReference referenceui;
+    DatabaseReference referencepadang;
 
     String unique;
     String uniqueauth;
@@ -89,36 +95,46 @@ public class MapActivity extends AppCompatActivity {
         Latd = preferences.getString("Latd", "");
         Lond = preferences.getString("Lond", "");
         desc = preferences.getString("desc", "Pusat Pemko Padang");
-        //setContentView(R.layout.activity_map);
+        FirebaseApp.initializeApp(MapActivity.this);
+
+        referenceui = FirebaseDatabase.getInstance().getReference().child("images");
+        //referencepadang = FirebaseDatabase.getInstance().getReference().child("logopadang");
+        //setContentView(R.layout.activity_map); - use binding
+        //mapView = findViewById(R.id.mapview); - use binding
         binding = ActivityMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        //mapView = findViewById(R.id.mapview);
         mapView = binding.mapview;
 
-     /*   Log.d("UNIQUELAT",unique);
-        Log.d("UNIQUEID",uniqueauth);
-        Log.d("LATD",Latd);
-        Log.d("LOND",Lond);*/
+        referenceui.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String link = dataSnapshot.child("logo").getValue(
+                        String.class);
 
-        mapView.setTileSource(TileSourceFactory.WIKIMEDIA);
-        mapView.setMultiTouchControls(true);
+                Picasso.get().load(link).into(binding.appCompatImageView);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+
+
         mapController = this.mapView.getController();
-        mapController.setZoom(17);
-        this.mMyLocationOverlay = new SimpleLocationOverlay(this);
+        this.mMyLocationOverlay = new SimpleLocationOverlay(MapActivity.this);
         //this.mapView.getOverlays().add(mMyLocationOverlay);
 
-        //this.mScaleBarOverlay = new ScaleBarOverlay(this);
-        //this.mapView.getOverlays().add(mScaleBarOverlay);
-
-
-
-
+        this.mScaleBarOverlay = new ScaleBarOverlay(mapView);
+        this.mapView.getOverlays().add(mScaleBarOverlay);
 
         //resourceProxy = new DefaultResourceProxyImpl(getApplicationContext());
         /*GeoPoint currentLocation = new GeoPoint
                 ( Double.parseDouble(binding.lat.getText().toString()) ,
                         Double.parseDouble(binding.lon.getText().toString()), 10);*/
+
+       //MarkerInfoWindow infoWindow = new MarkerInfoWindow(org.osmdroid.library.R.layout.bonuspack_bubble,mapView);
+       Marker startMarker = new Marker(mapView);
 
         if (!Latd.equals("")){
             Latdd = Latd;
@@ -134,37 +150,39 @@ public class MapActivity extends AppCompatActivity {
             desc = "Pusat Pemko Padang";
         }
 
-        GeoPoint currentLocation = new GeoPoint( Double.parseDouble(Latdd) , Double.parseDouble(Londd), 10);
-
-
-        Marker startMarker = new Marker(mapView);
-        startMarker.setIcon(getResources().getDrawable(R.drawable.marker_kml_point));
-
-        //String  desc = "Mushala Pemuda KNPI Sumbar";
-        //String  addr1 = "Jln. Batang Antokan No. 1 GOR H. Agus Salim";
-        //String  addr2 = "Kel. Rimbo Kaluang, Kec. Pdg Barat, Padang";
         String url = "https://www.google.com/maps/search/?api=1&query="+Latdd+","+Londd;
 
-        //startMarker.setTitle(desc +"\n" +addr1 +"\n" +addr2 +"\nTitik GPS: \n" + currentLocation);
-        MarkerInfoWindow infoWindow = new MarkerInfoWindow(org.osmdroid.library.R.layout.bonuspack_bubble,mapView);
+        /*if (desc.equals("Pusat Pemko Padang")){
+            startMarker.setImage(getResources().getDrawable(R.drawable.logopadang));
+        }else{
+            startMarker.setImage(getResources().getDrawable(R.drawable.logo));
+        }*/
 
-        startMarker.setTitle("Detail Lokasi: \n"+desc+ "\n Titik GPS: \n" + currentLocation);
-        startMarker.setPosition(currentLocation);
-        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-        startMarker.setImage(getResources().getDrawable(R.drawable.mushala));
-        startMarker.setInfoWindow(infoWindow);
-        startMarker.showInfoWindow();
-        mapView.getOverlays().add(startMarker);
-        mapController.animateTo(currentLocation);
+       GeoPoint currentLocation = new GeoPoint( Double.parseDouble(Latdd) , Double.parseDouble(Londd), 10);
+       startMarker.setIcon(getResources().getDrawable(R.drawable.mosque));
 
-        binding.logout.setOnClickListener(new View.OnClickListener() {
+       startMarker.setTitle("Detail Lokasi: \n"+desc+ "\n\n Titik GPS: \n" + currentLocation);
+       startMarker.setPosition(currentLocation);
+       startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+
+       //startMarker.setInfoWindow(infoWindow);
+       startMarker.showInfoWindow();
+       mapView.setTileSource(TileSourceFactory.MAPNIK);
+       mapView.setMultiTouchControls(true);
+       mapView.getOverlays().add(startMarker);
+       mapController.setZoom((double) 18.5);
+       mapController.animateTo(currentLocation);
+       mScaleBarOverlay.drawLatitudeScale(true);
+       mScaleBarOverlay.drawLongitudeScale(true);
+
+        /*binding.logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 startActivity(new Intent(MapActivity.this, Dashboard.class ));
                 finish();
             }
-        });
+        });*/
 
         binding.maps.setOnClickListener(new View.OnClickListener() {
             @Override

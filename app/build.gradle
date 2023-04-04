@@ -49,14 +49,23 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     // Add the dependency for the Realtime Database library
     implementation 'com.google.firebase:firebase-database'
+    // Add the dependency for the Storage Database library
+    implementation 'com.google.firebase:firebase-storage'
+    // Add the dependency for the firebase appcheck library
+    implementation 'com.google.firebase:firebase-appcheck-playintegrity'
+    // Add the dependency for image loader
+    //implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     //Add the depedency for OpenStreetMap
     implementation 'org.osmdroid:osmdroid-android:6.1.15'
-    //OpenStreetMap bonuspack
-    //implementation  name:'osmbonuspack_6.9.0', ext:'aar'
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
+
+    /*//OpenStreetMap bonuspack
+    implementation  name:'osmbonuspack_6.9.0', ext:'aar'*/
+    implementation fileTree(dir: 'libs', include: ['*.aar','*.jar'])
     implementation 'org.apache.commons:commons-lang3:3.8.1'
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+
     // Add this in addition to your other dependencies
     implementation "androidx.activity:activity:1.6.0-alpha05"
 
