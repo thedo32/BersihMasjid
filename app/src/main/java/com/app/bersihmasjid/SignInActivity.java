@@ -18,21 +18,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class SignInActivity extends AppCompatActivity {
 
     ActivitySigninBinding binding;
     FirebaseAuth auth;
-    ProgressDialog dialog;
-
-// DatabaseReference reference;
-
-    DatabaseReference reference;
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-    String uniqueId;
+
 
 
 
@@ -45,10 +45,6 @@ public class SignInActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
 
-
-      /*  reference = FirebaseDatabase.getInstance
-                ("https://diaryapp-8386b-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference
-                ( "UserDiary");*/
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         editor = preferences.edit();
 

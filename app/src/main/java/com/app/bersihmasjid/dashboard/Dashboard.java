@@ -40,18 +40,19 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
     AdapterDiaryBinding adapterDiaryBinding;
     ArrayList<ModelDiary> diaries;
     DatabaseReference reference;
-
+    DatabaseReference referenceall;
+    DatabaseReference referencechild;
+    DatabaseReference referenceadmin;
     DatabaseReference referenceusr;
     SharedPreferences preferences;
     FirebaseAuth auth;
-    SharedPreferences.Editor editor;
     LinearLayoutManager linearLayoutManager;
     AdapterDiary adapterDiary;
     ModelDiary modelDiary;
     ProgressDialog dialog;
     String unique;
     String uniqueId;
-    String all;
+    String admin;
     String email;
 
 
@@ -68,10 +69,12 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
         unique = preferences.getString("unique","");
         //email = preferences.getString("email","");
         //email = preferences.getString("email", "");
-        all = "XDb6D7GO3zYOlTYkVbWI0aLvXKD2";
+        admin = "XDb6D7GO3zYOlTYkVbWI0aLvXKD2";
 
         referenceusr = FirebaseDatabase.getInstance().getReference( "UserDiary");
-        reference = FirebaseDatabase.getInstance().getReference( "DataDiary").child(all);
+        reference = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(unique);
+        referenceadmin = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(admin);
+        referenceall = FirebaseDatabase.getInstance().getReference("DataDiary").child("data");
         diaries = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(Dashboard.this);
         dialog = new ProgressDialog( Dashboard.this);
@@ -106,7 +109,7 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
         diaries.clear(); //bersihkan dahulu data diary biar tidak bertumpuk
 
         //get name for dashboard
-        referenceusr.child(unique).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        referenceusr.child("user").child(unique).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -123,34 +126,105 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
         email  = user.getEmail();
 
 
+        if (!email.equals("jeffriargon@gmail.com")) {
+            //binding.add.setEnabled(false);
+            referenceadmin.orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
 
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
+                @SuppressLint("ResourceType")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        modelDiary = ds.getValue(ModelDiary.class);
+                        diaries.add(modelDiary);
+                    }
 
-            @SuppressLint("ResourceType")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-            for (DataSnapshot ds : snapshot.getChildren()){
-                modelDiary = ds.getValue(ModelDiary.class);
-                diaries.add(modelDiary);
+                    adapterDiary = new AdapterDiary(Dashboard.this, diaries);
+                    binding.rvDiary.setAdapter(adapterDiary);
+                    binding.noItem.setVisibility(View.GONE);
+
+                    //binding.add.setEnabled(false);
+
                 }
 
-                adapterDiary = new AdapterDiary( Dashboard.this, diaries);
-                binding.rvDiary.setAdapter(adapterDiary);
-                binding.noItem.setVisibility(View.GONE);
 
-                if (email.equals("jeffriargon@gmail.com")){
-                    binding.add.setEnabled(true);
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    binding.noItem.setVisibility(View.VISIBLE);
+                }
+            });
+
+
+            reference.orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
+
+                @SuppressLint("ResourceType")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        modelDiary = ds.getValue(ModelDiary.class);
+                        diaries.add(modelDiary);
+                    }
+
+                    adapterDiary = new AdapterDiary(Dashboard.this, diaries);
+                    binding.rvDiary.setAdapter(adapterDiary);
+                    binding.noItem.setVisibility(View.GONE);
+
+
+
                 }
 
-                dialog.dismiss();
-            };
+                ;
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            binding.noItem.setVisibility(View.VISIBLE);
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    binding.noItem.setVisibility(View.VISIBLE);
+                }
+            });
+        }else{
 
+
+            referenceall.addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
+
+                @SuppressLint("ResourceType")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String keys   = ds.getKey();
+                        referenceall.child(keys).orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
+
+                            @SuppressLint("ResourceType")
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot ds : snapshot.getChildren()) {
+                                    modelDiary = ds.getValue(ModelDiary.class);
+                                    diaries.add(modelDiary);
+                                }
+
+                                adapterDiary = new AdapterDiary(Dashboard.this, diaries);
+                                binding.rvDiary.setAdapter(adapterDiary);
+                                binding.noItem.setVisibility(View.GONE);
+
+
+
+                            }
+
+                            ;
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                binding.noItem.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                }
+             @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    binding.noItem.setVisibility(View.VISIBLE);
+                }
+            });
+
+        }
+
+        dialog.dismiss();
     }
 
     @Override

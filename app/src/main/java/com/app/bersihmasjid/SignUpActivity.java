@@ -101,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     UserDiary diary = new UserDiary(name,email,mobile);
 
-                    reference.child(unique).setValue(diary).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    reference.child("user").child(unique).setValue(diary).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){

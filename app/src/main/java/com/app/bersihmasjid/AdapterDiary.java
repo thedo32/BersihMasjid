@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,18 +46,17 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
 
     FirebaseAuth auth;
 
+    DatabaseReference referencedata;
     SharedPreferences preferences;
+
     String keyId ="";
     String date;
     UpdateDiary diary;
     SharedPreferences.Editor editor;
     String email;
-    String desc;
 
-    String Latd;
-    String Lond;
-    DatabaseReference referenceLat;
-    DatabaseReference referenceLon;
+    String uniqueauth;
+    String uniques;
 
 
 
@@ -80,18 +80,13 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         auth = FirebaseAuth.getInstance();
         preferences = context.getSharedPreferences("uisumbar",MODE_PRIVATE);
         editor = preferences.edit();
-
-        String uniques = preferences.getString("unique", "");
-
         FirebaseUser user = auth.getCurrentUser();
-
-        String uniqueauth = auth.getUid();
-
+        uniqueauth = auth.getUid();
         email = user.getEmail();
-        if (!email.equals("jeffriargon@gmail.com")){
-            holder.binding.edit.setEnabled(false);
-            holder.binding.delete.setEnabled(false);
-        }
+        uniques = preferences.getString("unique", "");
+
+
+
 
         String title = modelDiary.getTitle();
         String description = modelDiary.getDescription();
@@ -99,10 +94,6 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         String unique = modelDiary.getUserid();
         String Latd = modelDiary.getLat();
         String Lond = modelDiary.getLon();
-
-
-
-
 
         holder.binding.title.setText(title);
         holder.binding.description.setText(description);
@@ -115,13 +106,17 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 editor.putString("unique",unique);
                 editor.putString("Latd",Latd);
                 editor.putString("Lond",Lond);
-                editor.putString("desc",description.substring(0,100)+ "...");
+                if (description.length() >=100) {
+                    editor.putString("desc", description.substring(0, 100) + "...");
+                }else{
+                    editor.putString("desc",description);
+                }
                 editor.apply();
                 editor.commit();
-
-
                 context.startActivity(new Intent(context, MapActivity.class));
+
             }
+
         });
 
         holder.binding.delete.setOnClickListener(new View.OnClickListener(){
@@ -179,8 +174,12 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         editBinding.lat.setText(md.getLat());
         editBinding.lon.setText(md.getLon());
         keyId = md.getUserid();
+        Log.d("DeleteBerhasil",keyId);
+        Log.d("DeleteBerhasilll",uniques);
 
-
+       if (!uniqueauth.equals(uniques)){
+           editBinding.edit.setEnabled(false);
+       }
         editBinding.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -221,8 +220,11 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         deleteBinding.title.setText(mdelete.getTitle());
         deleteBinding.description.setText(mdelete.getDescription());
         keyId = mdelete.getUserid();
+        Log.d("DeleteBerhasil",keyId);
 
-
+        if (!keyId.equals(uniques)){
+            deleteBinding.delete.setEnabled(false);
+        }
         deleteBinding.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

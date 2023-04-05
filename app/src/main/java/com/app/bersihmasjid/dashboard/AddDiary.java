@@ -40,9 +40,7 @@ public class AddDiary extends AppCompatActivity {
         setContentView(view);
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         uniqueId = preferences.getString("unique", "");
-        reference = FirebaseDatabase.getInstance
-                ("https://bersihmasjid-60595-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference
-                ( "DataDiary").child(uniqueId);
+        reference = FirebaseDatabase.getInstance().getReference("DataDiary").child("data").child(uniqueId);
 
         dialog = new ProgressDialog( AddDiary.this);
 
@@ -54,7 +52,7 @@ public class AddDiary extends AppCompatActivity {
                 String title = binding.title.getText().toString();
                 String description = binding.description.getText().toString();
                 String lat = binding.lat.getText().toString();
-                String lon = binding.description.getText().toString();
+                String lon = binding.lon.getText().toString();
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat( "dd MMMM yyyy");
                 Calendar calendar = Calendar.getInstance();

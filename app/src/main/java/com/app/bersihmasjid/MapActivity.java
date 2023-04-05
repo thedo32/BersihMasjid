@@ -58,8 +58,6 @@ public class MapActivity extends AppCompatActivity {
     ItemizedIconOverlay<OverlayItem> currentLocationOverlay;
     SharedPreferences preferences;
     DatabaseReference referenceui;
-    DatabaseReference referencepadang;
-
     String unique;
     String uniqueauth;
     FirebaseAuth auth;
@@ -106,6 +104,8 @@ public class MapActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         mapView = binding.mapview;
+
+
 
 
         referenceui.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -165,13 +165,8 @@ public class MapActivity extends AppCompatActivity {
 
        GeoPoint currentLocation = new GeoPoint( Double.parseDouble(Latdd) , Double.parseDouble(Londd), 10);
 
-        if (desc.equals("Pusat Pemko Padang")){
-            startMarker.setIcon(getResources().getDrawable(R.drawable.building));
-        }else{
-            startMarker.setIcon(getResources().getDrawable(R.drawable.mosque));
-        }
 
-
+       startMarker.setIcon(getResources().getDrawable(R.drawable.home));
        startMarker.setTitle("Detail Lokasi: \n"+desc+ "\n\n Titik GPS: \n" + currentLocation);
        startMarker.setPosition(currentLocation);
        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
