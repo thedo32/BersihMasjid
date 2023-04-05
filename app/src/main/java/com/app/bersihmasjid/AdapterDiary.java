@@ -82,17 +82,24 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         uniques = preferences.getString("unique", "");
 
 
+
+
         String title = modelDiary.getTitle();
         String description = modelDiary.getDescription();
         String date = modelDiary.getDate();
         String unique = modelDiary.getUserid();
         String Latd = modelDiary.getLat();
         String Lond = modelDiary.getLon();
+        String update = modelDiary.getUpdater();
 
         holder.binding.title.setText(title);
         holder.binding.description.setText(description);
-        holder.binding.date.setText("Update: " +date);
-        holder.binding.cview.setBackgroundColor(0xFFFFFF12);
+        holder.binding.date.setText(date);
+        holder.binding.update.setText(update);
+        if (update.equals("Admin Update:")){
+           holder.binding.update.setTextColor(0XFFEA0808);
+        }
+
 
         holder.binding.maps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,7 +209,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         editBinding.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat( "dd MMMM yyyy");
+                SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd");
                 Calendar calendar = Calendar.getInstance();
 
                 date = dateFormat.format(calendar.getTime());
@@ -211,8 +218,15 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 String description = editBinding.description.getText().toString();
                 String lat = editBinding.lat.getText().toString();
                 String lon = editBinding.lon.getText().toString();
+                String updater = "Admin Update:";
 
-                ModelDiary mdEdit = new ModelDiary(title, description, date, keyId,lat,lon);
+                if (!uniqueauth.equals("XDb6D7GO3zYOlTYkVbWI0aLvXKD2")) {
+                    updater = "Update Tgl:";
+                }
+
+
+
+                ModelDiary mdEdit = new ModelDiary(title, description, date, keyId,lat,lon,updater);
                 diary.UpdateDiary(mdEdit);
 
 
@@ -263,7 +277,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         deleteBinding.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat( "dd MMMM yyyy");
+                SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd");
                 Calendar calendar = Calendar.getInstance();
 
                 date = dateFormat.format(calendar.getTime());
@@ -272,7 +286,13 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 String description = deleteBinding.description.getText().toString();
                 String lat = "-0.891741";
                 String lon = "100.354692";
-                ModelDiary mDel = new ModelDiary(title, description, date, keyId,lat,lon);
+                String updater = "Admin Update:";
+
+                if (!uniqueauth.equals("XDb6D7GO3zYOlTYkVbWI0aLvXKD2")) {
+                    updater = "Update Tgl:";
+                }
+
+                ModelDiary mDel = new ModelDiary(title, description, date, keyId,lat,lon,updater);
                 diary.DeleteDiary(mDel);
 
 

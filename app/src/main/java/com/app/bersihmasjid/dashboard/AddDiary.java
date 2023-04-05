@@ -54,15 +54,20 @@ public class AddDiary extends AppCompatActivity {
                 String lat = binding.lat.getText().toString();
                 String lon = binding.lon.getText().toString();
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat( "dd MMMM yyyy");
+                SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd");
                 Calendar calendar = Calendar.getInstance();
                 String fixDate = dateFormat.format(calendar.getTime());
+                String updater = "Admin Update:";
+
+                if (!uniqueId.equals("XDb6D7GO3zYOlTYkVbWI0aLvXKD2")) {
+                    updater = "Update Tgl:";
+                }
 
                 dialog.setMessage("Tunggu Sebentar...");
                 dialog.show();
                 keyUnique = reference.push().getKey();
 
-                ModelDiary modelDiary = new ModelDiary(title, description, fixDate, keyUnique,lat, lon);
+                ModelDiary modelDiary = new ModelDiary(title, description, fixDate, keyUnique,lat, lon, updater);
                 reference.child(keyUnique).setValue(modelDiary).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

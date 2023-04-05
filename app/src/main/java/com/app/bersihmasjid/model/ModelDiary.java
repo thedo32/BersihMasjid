@@ -8,18 +8,20 @@ public class ModelDiary {
     private String lon;
     private String userid;
 
+    private String updater;
 
     public ModelDiary() {
 
     }
 
-    public ModelDiary(String title, String description, String date, String userid,String lat, String lon) {
+    public ModelDiary(String title, String description, String date, String userid,String lat, String lon,String updater) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.userid = userid;
         this.lat = lat;
         this.lon = lon;
+        this.updater = updater;
     }
 
     public String getTitle() {
@@ -70,5 +72,13 @@ public class ModelDiary {
 
     public void setLon(String lon) {
         this.lon = lon;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
     }
 }

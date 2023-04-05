@@ -21,6 +21,7 @@
 
             <TextView
                 android:id="@+id/title"
+                android:background="@drawable/custom_bgone_s"
                 android:text="@string/title"
                 android:textColor="@color/black"
                 android:layout_marginBottom="5dp"
@@ -30,23 +31,35 @@
 
             <TextView
                 android:id="@+id/description"
-                android:text="@string/description"
-                android:textColor="#2B2828"
-                android:minHeight="48dp"
-                android:layout_marginBottom="10dp"
-                android:textSize="15sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:minHeight="48dp"
+                android:text="@string/description"
+                android:background="@drawable/custom_text_white"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="15sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/update"
+                    android:text="Admin Update:"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="RelativeOverlap,SmallSp" />
+
+                <TextView
                     android:id="@+id/date"
                     android:text="@string/_12_januari_2025"
-                    android:textColor="#2B2828"
+                    android:textColor="@color/black"
                     android:textSize="10sp"
+                    android:layout_marginLeft="95dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:ignore="RelativeOverlap,SmallSp" />
