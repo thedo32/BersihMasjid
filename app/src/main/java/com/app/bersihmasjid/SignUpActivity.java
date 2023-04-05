@@ -56,14 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         editor = preferences.edit();
 
-     /*   binding.title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
-
-        binding.title.setVisibility(View.GONE);*/
 
         binding.signin.setOnClickListener(new View.OnClickListener() {
             @Override

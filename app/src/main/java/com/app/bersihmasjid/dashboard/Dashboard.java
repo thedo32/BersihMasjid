@@ -19,7 +19,6 @@ import com.app.bersihmasjid.SignInActivity;
 import com.app.bersihmasjid.databinding.ActivityDashboardBinding;
 import com.app.bersihmasjid.databinding.AdapterDiaryBinding;
 import com.app.bersihmasjid.model.ModelDiary;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +40,6 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
     ArrayList<ModelDiary> diaries;
     DatabaseReference reference;
     DatabaseReference referenceall;
-    DatabaseReference referencechild;
     DatabaseReference referenceadmin;
     DatabaseReference referenceusr;
     SharedPreferences preferences;
@@ -125,7 +123,6 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
         FirebaseUser user = auth.getCurrentUser();
         email  = user.getEmail();
 
-
         if (!email.equals("jeffriargon@gmail.com")) {
             //binding.add.setEnabled(false);
             referenceadmin.orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
@@ -168,11 +165,7 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
                     binding.rvDiary.setAdapter(adapterDiary);
                     binding.noItem.setVisibility(View.GONE);
 
-
-
                 }
-
-                ;
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -189,6 +182,7 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String keys   = ds.getKey();
+
                         referenceall.child(keys).orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
 
                             @SuppressLint("ResourceType")
@@ -206,8 +200,6 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
 
 
                             }
-
-                            ;
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {

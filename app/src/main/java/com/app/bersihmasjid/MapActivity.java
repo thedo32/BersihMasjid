@@ -3,22 +3,14 @@ package com.app.bersihmasjid;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.app.bersihmasjid.dashboard.Dashboard;
 import com.app.bersihmasjid.databinding.ActivityMapBinding;
-import com.app.bersihmasjid.model.ModelDiary;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -39,7 +30,6 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
-import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow;
 import org.osmdroid.views.overlay.mylocation.SimpleLocationOverlay;
 
 /**
@@ -52,8 +42,6 @@ import org.osmdroid.views.overlay.mylocation.SimpleLocationOverlay;
 public class MapActivity extends AppCompatActivity {
     private MapView mapView = null;
     private final FloatingActionButton logOut = null;
-    private IMapController mapController;
-    private SimpleLocationOverlay mMyLocationOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
     ItemizedIconOverlay<OverlayItem> currentLocationOverlay;
     SharedPreferences preferences;
@@ -84,7 +72,7 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstance);
         Configuration.getInstance().load(getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
-        //TODO check permissions
+
 
         auth = FirebaseAuth.getInstance();
         uniqueauth = auth.getUid();
@@ -98,8 +86,8 @@ public class MapActivity extends AppCompatActivity {
 
         referenceui = FirebaseDatabase.getInstance().getReference().child("images");
         //referencepadang = FirebaseDatabase.getInstance().getReference().child("logopadang");
-        //setContentView(R.layout.activity_map); - use binding
-        //mapView = findViewById(R.id.mapview); - use binding
+        //setContentView(R.layout.activity_map); - use bindings
+        //mapView = findViewById(R.id.mapview); - use bindings
         binding = ActivityMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -128,21 +116,17 @@ public class MapActivity extends AppCompatActivity {
         });
 
 
-
-
-        mapController = this.mapView.getController();
-        this.mMyLocationOverlay = new SimpleLocationOverlay(MapActivity.this);
+        IMapController mapController = this.mapView.getController();
+        SimpleLocationOverlay mMyLocationOverlay = new SimpleLocationOverlay(MapActivity.this);
         //this.mapView.getOverlays().add(mMyLocationOverlay);
 
         this.mScaleBarOverlay = new ScaleBarOverlay(mapView);
         this.mapView.getOverlays().add(mScaleBarOverlay);
 
-        //resourceProxy = new DefaultResourceProxyImpl(getApplicationContext());
-        /*GeoPoint currentLocation = new GeoPoint
-                ( Double.parseDouble(binding.lat.getText().toString()) ,
-                        Double.parseDouble(binding.lon.getText().toString()), 10);*/
+      /*  resourceProxy = new DefaultResourceProxyImpl(getApplicationContext());
+        MarkerInfoWindow infoWindow = new MarkerInfoWindow
+        (org.osmdroid.library.R.layout.bonuspack_bubble,mapView);*/
 
-       //MarkerInfoWindow infoWindow = new MarkerInfoWindow(org.osmdroid.library.R.layout.bonuspack_bubble,mapView);
        Marker startMarker = new Marker(mapView);
 
         if (!Latd.equals("")){
@@ -176,19 +160,11 @@ public class MapActivity extends AppCompatActivity {
        mapView.setTileSource(TileSourceFactory.MAPNIK);
        mapView.setMultiTouchControls(true);
        mapView.getOverlays().add(startMarker);
-       mapController.setZoom((double) 18.5);
+       mapController.setZoom(18.5);
        mapController.animateTo(currentLocation);
        mScaleBarOverlay.drawLatitudeScale(true);
        mScaleBarOverlay.drawLongitudeScale(true);
 
-        /*binding.logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(new Intent(MapActivity.this, Dashboard.class ));
-                finish();
-            }
-        });*/
 
         binding.maps.setOnClickListener(new View.OnClickListener() {
             @Override

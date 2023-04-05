@@ -4,7 +4,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,20 +17,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.bersihmasjid.dashboard.UpdateDiary;
-import com.app.bersihmasjid.databinding.ActivityDashboardBinding;
 import com.app.bersihmasjid.databinding.AdapterDiaryBinding;
 import com.app.bersihmasjid.databinding.DeleteDiaryBinding;
 import com.app.bersihmasjid.databinding.EditDiaryBinding;
-import com.app.bersihmasjid.databinding.ActivityMapBinding;
 import com.app.bersihmasjid.model.ModelDiary;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +38,6 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
     Context context;
     ArrayList<ModelDiary> arrayList;
     AdapterDiaryBinding binding;
-    ActivityMapBinding mapBinding;
 
     FirebaseAuth auth;
 
@@ -58,6 +53,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
     String uniqueauth;
     String uniques;
 
+    String keys;
 
 
     public AdapterDiary(Context context, ArrayList<ModelDiary> arrayList){
@@ -86,8 +82,6 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         uniques = preferences.getString("unique", "");
 
 
-
-
         String title = modelDiary.getTitle();
         String description = modelDiary.getDescription();
         String date = modelDiary.getDate();
@@ -98,6 +92,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         holder.binding.title.setText(title);
         holder.binding.description.setText(description);
         holder.binding.date.setText("Update: " +date);
+        holder.binding.cview.setBackgroundColor(0xFFFFFF12);
 
         holder.binding.maps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +118,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
             @Override
             public void onClick(View view){
 
+
                 ModelDiary modelDiary2 = arrayList.get(position);
                 LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService
                         (Context.LAYOUT_INFLATER_SERVICE);
@@ -132,13 +128,19 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         });
 
         holder.binding.edit.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View view){
+
+
+               /* String uniquess = referencedata.push().getKey();
+                Log.d("TESSSST",uniquess +" " + unique + " " + uniqueauth + "  "+ uniques );*/
                 ModelDiary modelDiary1 = arrayList.get(position);
                 LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService
                         (Context.LAYOUT_INFLATER_SERVICE);
                 EditDiaryBinding binding1 = EditDiaryBinding.inflate(layoutInflater);
                 editDiary(modelDiary1,binding1);
+
             }
         });
     }
@@ -174,12 +176,29 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         editBinding.lat.setText(md.getLat());
         editBinding.lon.setText(md.getLon());
         keyId = md.getUserid();
-        Log.d("DeleteBerhasil",keyId);
-        Log.d("DeleteBerhasilll",uniques);
 
-       if (!uniqueauth.equals(uniques)){
-           editBinding.edit.setEnabled(false);
-       }
+        referencedata = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(uniqueauth);
+
+        referencedata.addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
+
+            @SuppressLint("ResourceType")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    keys   = ds.getKey();
+                    if (keys.equals(keyId)){
+                        editBinding.edit.setEnabled(true);
+                        editBinding.label.setText("ANDA AKAN EDIT DATA");
+                    }
+
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
         editBinding.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -220,11 +239,27 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         deleteBinding.title.setText(mdelete.getTitle());
         deleteBinding.description.setText(mdelete.getDescription());
         keyId = mdelete.getUserid();
-        Log.d("DeleteBerhasil",keyId);
+        referencedata = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(uniqueauth);
 
-        if (!keyId.equals(uniques)){
-            deleteBinding.delete.setEnabled(false);
-        }
+        referencedata.addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
+
+            @SuppressLint("ResourceType")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    keys   = ds.getKey();
+                    if (keys.equals(keyId)){
+                        deleteBinding.delete.setEnabled(true);
+                        deleteBinding.label.setText("ANDA AKAN HAPUS DATA");
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
         deleteBinding.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
