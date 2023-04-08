@@ -33,7 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-//TODO Adapter User belum selesai
 
 public class AdapterUser extends AppCompatActivity {
     EditUserBinding binding;
@@ -146,7 +145,7 @@ public class AdapterUser extends AppCompatActivity {
 
         });
 
-            //TODO Adapter User edit belum selesai
+
         binding.name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -159,7 +158,7 @@ public class AdapterUser extends AppCompatActivity {
                 referenceall.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        //TODO di isi dengan parent dari name - belum selesai
+
                         for (DataSnapshot dss : snapshot.getChildren()) {
                             String keyss = dss.getKey().toString();
                             Log.d("KEYSS",keyss);
@@ -242,6 +241,7 @@ public class AdapterUser extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 binding.point.setText("1");
+                Log.e("ERRROR SPINNER","DATABASE EROOR" );
             }
         });
 
@@ -261,22 +261,27 @@ public class AdapterUser extends AppCompatActivity {
                 String account = binding.account.getText().toString();
                 String mobile = binding.mobile.getText().toString();
                 String points = binding.point.getText().toString();
+                String pointsss = binding.addpoint.getText().toString();
 
-                int pointss = Integer.parseInt(points)+1;
-                point = String.valueOf(pointss);
+                if (!pointsss.equals(null)){
+                    int pointss = Integer.parseInt(points ) + Integer.parseInt( pointsss);
+                    point = String.valueOf(pointss);
+                }
 
 
                 Log.d("SELECTED NAME",name);
 
                 UserDiary uEdit = new UserDiary(name, email, mobile, point, account, description);
                 //Log.d("UNIQUE",unique);
+
+
                 referenceall.child(keyss).setValue(uEdit).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
 
-                            Toast.makeText(AdapterUser.this, "Pendaftaran Sukses",
+                            Toast.makeText(AdapterUser.this, "Pengeditan Sukses",
                                     Toast.LENGTH_SHORT).show();
 
                             finish();
@@ -295,14 +300,19 @@ public class AdapterUser extends AppCompatActivity {
 
         });
 
-
+        //TODO Adapter User delete belum selesai
 
         binding.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String name = binding.name.getAdapter().toString();
+                String name = binding.name.getSelectedItem().toString();
+                String keyss =  binding.keys.getText().toString();
+                String email = binding.email.getText().toString();
                 String description = binding.description.getText().toString();
+                String account = binding.account.getText().toString();
+                String mobile = binding.mobile.getText().toString();
+                String point = binding.point.getText().toString();
 
                 UserDiary DelUser = new UserDiary(name, email, mobile, point, account, description);
                 users.DeleteUser(DelUser);
