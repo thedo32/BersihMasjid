@@ -23,7 +23,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="12dp">
 
         <!--android:drawableLeft="@drawable/email"-->
 
@@ -65,7 +67,7 @@
             tools:ignore="VisualLintTextFieldSize" />
         <!--android:drawableLeft="@drawable/email"-->
 
-        <EditText
+        <TextView
             android:id="@+id/account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,7 +83,7 @@
             android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
 
-        <EditText
+        <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,10 +96,53 @@
             android:hint="@string/description_hint"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress|textMultiLine"
-            android:maxLines="10"
-            android:minLines="10"
+            android:maxLines="4"
+            android:minLines="4"
             android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize" />
+
+        <TextView
+            android:id="@+id/keys"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="380dp"
+            android:layout_marginRight="5dp"
+            android:autofillHints="0.000"
+            android:background="@color/white"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:textColorHint="@color/white"
+            tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="390dp"
+            android:layout_marginRight="5dp"
+            android:autofillHints="0.000"
+            android:background="@color/white"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:textColorHint="@color/white"
+            tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,VisualLintOverlap" />
+
+        <EditText
+            android:id="@+id/mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="400dp"
+            android:layout_marginRight="5dp"
+            android:autofillHints="0.000"
+            android:background="@color/white"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:textColorHint="@color/white"
+            tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/edit"
