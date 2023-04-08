@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.bersihmasjid.dashboard.Dashboard;
+import com.app.bersihmasjid.dashboard.DashboardAdmin;
 import com.app.bersihmasjid.databinding.ActivitySigninBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -77,12 +78,22 @@ public class SignInActivity extends AppCompatActivity {
                     FirebaseUser user = auth.getCurrentUser();
                     String unique = user.getUid();
                     String email  = user.getEmail();
-                    editor.putString("unique",unique);
-                    editor.putString("email",email);
-                    //editor.putBoolean("autologin",true);
-                    editor.apply();
-                    editor.commit();
-                    startActivity(new Intent(SignInActivity.this, Dashboard.class));
+                    if (email.equals("jeffriargon@gmail.com")) {
+                        editor.putString("unique", unique);
+                        editor.putString("email", email);
+                        //editor.putBoolean("autologin",true);
+                        editor.apply();
+                        editor.commit();
+                        startActivity(new Intent(SignInActivity.this, DashboardAdmin.class));
+                    }else{
+                        editor.putString("unique", unique);
+                        editor.putString("email", email);
+                        //editor.putBoolean("autologin",true);
+                        editor.apply();
+                        editor.commit();
+                        startActivity(new Intent(SignInActivity.this, Dashboard.class));
+                    }
+
                     Toast.makeText(SignInActivity.this, "Login Sukses",
                             Toast.LENGTH_SHORT).show();
                     finish();

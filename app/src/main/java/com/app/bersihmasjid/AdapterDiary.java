@@ -2,11 +2,14 @@ package com.app.bersihmasjid;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +19,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.app.bersihmasjid.dashboard.AddDiaryUser;
+import com.app.bersihmasjid.dashboard.Dashboard;
 import com.app.bersihmasjid.dashboard.UpdateDiary;
 import com.app.bersihmasjid.databinding.AdapterDiaryBinding;
 import com.app.bersihmasjid.databinding.DeleteDiaryBinding;
@@ -96,9 +101,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         holder.binding.description.setText(description);
         holder.binding.date.setText(date);
         holder.binding.update.setText(update);
-        if (update.equals("Admin Update:")){
-           holder.binding.update.setTextColor(0XFFEA0808);
-        }
+
 
 
         holder.binding.maps.setOnClickListener(new View.OnClickListener() {
@@ -106,13 +109,15 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
             public void onClick(View view) {
 
                 editor.putString("unique",unique);
+
+                if (description.length() >=60) {
+                     editor.putString("desc", description.substring(0, 60) + "...");
+                }else {
+                    editor.putString("desc", description);
+                }
+
                 editor.putString("Latd",Latd);
                 editor.putString("Lond",Lond);
-                if (description.length() >=100) {
-                    editor.putString("desc", description.substring(0, 100) + "...");
-                }else{
-                    editor.putString("desc",description);
-                }
                 editor.apply();
                 editor.commit();
                 context.startActivity(new Intent(context, MapActivity.class));
@@ -184,6 +189,11 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         editBinding.lon.setText(md.getLon());
         keyId = md.getUserid();
 
+        if (!uniqueauth.equals("XDb6D7GO3zYOlTYkVbWI0aLvXKD2")) {
+            editBinding.lat.setVisibility(View.GONE);
+            editBinding.lon.setVisibility(View.GONE);
+        }
+
         referencedata = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(uniqueauth);
 
         referencedata.addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
@@ -218,13 +228,11 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 String description = editBinding.description.getText().toString();
                 String lat = editBinding.lat.getText().toString();
                 String lon = editBinding.lon.getText().toString();
-                String updater = "Admin Update:";
+                String updater = "ADMIN Update:";
 
                 if (!uniqueauth.equals("XDb6D7GO3zYOlTYkVbWI0aLvXKD2")) {
                     updater = "Update Tgl:";
                 }
-
-
 
                 ModelDiary mdEdit = new ModelDiary(title, description, date, keyId,lat,lon,updater);
                 diary.UpdateDiary(mdEdit);
@@ -241,6 +249,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 },360);
             }
         });
+
     }
 
 
@@ -286,7 +295,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 String description = deleteBinding.description.getText().toString();
                 String lat = "-0.891741";
                 String lon = "100.354692";
-                String updater = "Admin Update:";
+                String updater = "ADMIN Update:";
 
                 if (!uniqueauth.equals("XDb6D7GO3zYOlTYkVbWI0aLvXKD2")) {
                     updater = "Update Tgl:";

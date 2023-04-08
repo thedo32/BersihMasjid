@@ -81,7 +81,7 @@ public class MapActivity extends AppCompatActivity {
         unique = preferences.getString("unique", "");
         Latd = preferences.getString("Latd", "");
         Lond = preferences.getString("Lond", "");
-        desc = preferences.getString("desc", "Pusat Pemko Padang");
+        desc = preferences.getString("desc", "Mushala Pemuda KNPI Sumbar");
         FirebaseApp.initializeApp(MapActivity.this);
 
         referenceui = FirebaseDatabase.getInstance().getReference().child("images");
@@ -99,8 +99,8 @@ public class MapActivity extends AppCompatActivity {
         referenceui.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (desc.equals("Pusat Pemko Padang")){
-                    imagepath = "logopadang";
+               if (Lond.equals("100.3993412")) {
+                    imagepath = "albina";
                 }else{
                     imagepath = "logo";
                 }
@@ -132,22 +132,21 @@ public class MapActivity extends AppCompatActivity {
         if (!Latd.equals("")){
             Latdd = Latd;
         }else{
-            Latdd ="-0.8758335";
-            desc = "Pusat Pemko Padang";
+            Latdd ="-0.9294895";
+            desc = "Mushala Pemuda KNPI Sumbar";
         }
 
         if (!Lond.equals("")){
             Londd = Lond;
         }else{
-            Londd = "100.3874282";
-            desc = "Pusat Pemko Padang";
+            Londd = "100.359956";
+            desc = "Mushala Pemuda KNPI Sumbar";
         }
-
         String url = "https://www.google.com/maps/search/?api=1&query="+Latdd+","+Londd;
 
 
 
-       GeoPoint currentLocation = new GeoPoint( Double.parseDouble(Latdd) , Double.parseDouble(Londd), 10);
+       GeoPoint currentLocation = new GeoPoint( Double.parseDouble(Latdd) , Double.parseDouble(Londd), 0);
 
 
        startMarker.setIcon(getResources().getDrawable(R.drawable.home));

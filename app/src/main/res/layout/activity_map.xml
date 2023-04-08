@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="225dp"
         android:background="@drawable/custom_text"
         android:baselineAlignBottom="true"
         android:foregroundGravity="center_horizontal"
@@ -22,7 +22,7 @@
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="225dp"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         app:layout_constraintStart_toStartOf="parent"

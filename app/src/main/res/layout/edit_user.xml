@@ -6,15 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<!--TODO  Layout edit user belum selesai-->
     <TextView
         android:id="@+id/label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center_horizontal"
-        android:text="BUKAN DATA ANDA TIDAK BISA EDIT"
-        android:textSize="12sp"
+        android:text="ADMINISTRASI USER"
         android:textColor="#FFE80404"
+        android:textSize="12sp"
         tools:ignore="VisualLintOverlap" />
 
     <RelativeLayout
@@ -22,30 +25,68 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
 
-        <EditText
-            android:id="@+id/title"
+        <!--android:drawableLeft="@drawable/email"-->
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/custom_text"
+
+            android:clickable="true"
+            android:drawablePadding="5dp"
+            android:hint="nama"
+            android:importantForAutofill="no"
+            android:minHeight="48dp"
+            android:spinnerMode="dropdown"
+            android:textColorHint="@color/black"
+            android:textCursorDrawable="@color/black"
+            tools:ignore="VisualLintTextFieldSize,SpeakableTextPresentCheck"
+            tools:listheader="Nama" />
+
+        <EditText
+            android:id="@+id/point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="120dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/custom_text"
             android:cursorVisible="true"
             android:drawablePadding="5dp"
-            android:hint="@string/title"
+            android:hint="point"
             android:importantForAutofill="no"
             android:inputType="textCapWords"
             android:textColorHint="@color/black"
             android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize" />
+        <!--android:drawableLeft="@drawable/email"-->
 
+        <EditText
+            android:id="@+id/account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="190dp"
+            android:layout_marginRight="5dp"
+            android:autofillHints="0.000"
+            android:background="@drawable/custom_text"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:hint="bank account"
+            android:textColorHint="@color/black"
+            android:textCursorDrawable="@color/black"
+            tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
 
         <EditText
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="125dp"
+            android:layout_marginTop="260dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/custom_text"
             android:cursorVisible="true"
@@ -57,51 +98,30 @@
             android:minLines="10"
             android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize" />
-        <!--android:drawableLeft="@drawable/password" > -->
-
-        <EditText
-            android:id="@+id/lat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="500dp"
-            android:layout_marginRight="5dp"
-            android:autofillHints="0.000"
-            android:background="@drawable/custom_text"
-            android:cursorVisible="true"
-            android:drawablePadding="10dp"
-            android:hint="@string/titik_lokasi"
-            android:textColorHint="@color/black"
-            android:textCursorDrawable="@color/black"
-            tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
-
-        <EditText
-            android:id="@+id/lon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="570dp"
-            android:layout_marginRight="5dp"
-            android:autofillHints="0.000"
-            android:background="@drawable/custom_text"
-            android:cursorVisible="true"
-            android:drawablePadding="10dp"
-            android:hint="@string/titik_lokasi"
-            android:minHeight="48dp"
-            android:textColorHint="@color/black"
-            android:textCursorDrawable="@color/black"
-            tools:ignore="VisualLintTextFieldSize,TouchTargetSizeCheck" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="36dp"
+            android:contentDescription="@string/submit_edit"
+            android:enabled="true"
+            android:src="@drawable/edit"
+            app:rippleColor="@color/teal_200"
+            tools:ignore="ImageContrastCheck" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="162dp"
+            android:layout_marginEnd="36dp"
             android:contentDescription="@string/submit_edit"
-            android:enabled="false"
-            android:src="@drawable/edit"
+            android:enabled="true"
+            android:src="@drawable/close"
             app:rippleColor="@color/teal_200"
             tools:ignore="ImageContrastCheck" />
 

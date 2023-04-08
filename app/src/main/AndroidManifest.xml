@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BersihMasjid"
         android:enableOnBackInvokedCallback="true"
-        tools:targetApi="31">
+        tools:targetApi="tiramisu">
         <activity
             android:name=".Splash"
             android:exported="true">
@@ -24,9 +24,13 @@
         <activity android:name=".SignInActivity"/>
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".MapActivity"/>
+        <activity android:name=".StorageActivity"/>
         <activity android:name=".Forgot"/>
+        <activity android:name=".AdapterUser"/>
         <activity android:name=".dashboard.Dashboard"/>
+        <activity android:name=".dashboard.DashboardAdmin"/>
         <activity android:name=".dashboard.AddDiary"/>
+        <activity android:name=".dashboard.AddDiaryUser"/>
 
     </application>
 <!--<uses-permission android:name="android.permission.INTERNET"/>"-->
