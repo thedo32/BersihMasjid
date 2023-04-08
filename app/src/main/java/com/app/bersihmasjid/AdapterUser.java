@@ -170,7 +170,7 @@ public class AdapterUser extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                referenceall.child("uniqueId").addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
+                referenceall.child(uniqueId).addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
 
                     @SuppressLint("ResourceType")
                     @Override
@@ -201,18 +201,45 @@ public class AdapterUser extends AppCompatActivity {
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         //TODO di isi dengan parent dari name - belum selesai
                                         for (DataSnapshot dss : snapshot.getChildren()) {
-                                            String keyss = dss.getChildren().toString();
+                                            String keyss = dss.getKey().toString();
+                                            Log.d("KEYSS",keyss);
                                             referenceall.child(keyss).addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                     for (DataSnapshot dsss : snapshot.getChildren()) {
                                                         String keysss = dsss.getKey();
-                                                        if (keyss.equals("name")) {
+                                                        Log.d("KEYSSs",keysss);
+                                                        if (keysss.equals("name")) {
                                                             String namesss = dsss.getValue().toString();
                                                             if (namesss.equals(name)) {
+                                                                //Log.d("NAMAUSER",name);
+                                                                //Log.d("NAMESSS",namesss);
+                                                                unique = keyss;
+                                                                //Log.d("UNIQUESS",unique);
+                                                                UserDiary uEdit = new UserDiary(name, email, mobile, point, account, description);
+                                                                //Log.d("UNIQUE",unique);
+                                                                referenceall.child(unique).setValue(uEdit).addOnCompleteListener(new OnCompleteListener<Void>() {
 
-                                                                unique = referenceall.getParent().toString();
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        if (task.isSuccessful()){
 
+                                                                            Toast.makeText(AdapterUser.this, "Pendaftaran Sukses",
+                                                                                    Toast.LENGTH_SHORT).show();
+
+                                                                            finish();
+                                                                        }else{
+                                                                            Toast.makeText(AdapterUser.this, "Mengirim ke Database Gagal",
+                                                                                    Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                        dialog.dismiss();
+
+                                                                    }
+
+                                                                });
+
+
+                                                                break;
 
                                                             }
                                                         }
@@ -234,27 +261,8 @@ public class AdapterUser extends AppCompatActivity {
                                     }
                                 });
 
-                                UserDiary uEdit = new UserDiary(name, email, mobile, point, account, description);
 
-                                referenceall.child(unique).setValue(uEdit).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
 
-                                            Toast.makeText(AdapterUser.this, "Pendaftaran Sukses",
-                                                    Toast.LENGTH_SHORT).show();
-
-                                            finish();
-                                        }else{
-                                            Toast.makeText(AdapterUser.this, "Mengirim ke Database Gagal",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                        dialog.dismiss();
-
-                                    }
-
-                                });
-                                break;
 
                             }
 
