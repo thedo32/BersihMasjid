@@ -22,7 +22,6 @@ import com.app.bersihmasjid.model.ModelDiary;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +38,6 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
     AdapterDiaryBinding adapterDiaryBinding;
     ArrayList<ModelDiary> diaries;
     DatabaseReference reference;
-    DatabaseReference referenceall;
     DatabaseReference referenceadmin;
     DatabaseReference referenceusr;
     SharedPreferences preferences;
@@ -51,7 +49,7 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
     String unique;
     String uniqueId;
     String admin;
-    String email;
+
 
 
 
@@ -65,29 +63,22 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
         auth = FirebaseAuth.getInstance();
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         unique = preferences.getString("unique","");
-        //email = preferences.getString("email","");
-        //email = preferences.getString("email", "");
         admin = "XDb6D7GO3zYOlTYkVbWI0aLvXKD2";
 
         referenceusr = FirebaseDatabase.getInstance().getReference( "UserDiary");
-        reference = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(unique);
         referenceadmin = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(admin);
+        reference = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(unique);
         diaries = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(Dashboard.this);
         dialog = new ProgressDialog( Dashboard.this);
 
         binding.rvDiary.setLayoutManager(linearLayoutManager);
 
-
-
           binding.add.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                  if (unique.equals(admin)) {
-                      startActivity(new Intent(Dashboard.this, AddDiary.class));
-                  }else{
+
                       startActivity(new Intent(Dashboard.this, AddDiaryUser.class));
-                  }
               }
           });
 
@@ -122,12 +113,21 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
             }
         });
 
-        //get Auth user email
-        FirebaseUser user = auth.getCurrentUser();
-        email  = user.getEmail();
+        referenceusr.child("user").child(unique).child("point").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
-                   //binding.add.setEnabled(false);
-            referenceadmin.orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    binding.point.setText(String.valueOf(task.getResult().getValue()));
+                }
+                else {
+                    Log.e("firebase", "Data Gagal Didapatkan", task.getException());
+                }
+            }
+        });
+
+
+            referenceadmin.orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data admin konten diary dari firebase
 
                 @SuppressLint("ResourceType")
                 @Override
@@ -141,7 +141,27 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
                     binding.rvDiary.setAdapter(adapterDiary);
                     binding.noItem.setVisibility(View.GONE);
 
-                    //binding.add.setEnabled(false);
+                    reference.orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data user konten diary dari firebase
+
+                        @SuppressLint("ResourceType")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                modelDiary = ds.getValue(ModelDiary.class);
+                                diaries.add(modelDiary);
+                            }
+
+                            adapterDiary = new AdapterDiary(Dashboard.this, diaries);
+                            binding.rvDiary.setAdapter(adapterDiary);
+                            binding.noItem.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            binding.noItem.setVisibility(View.VISIBLE);
+                        }
+                    });
 
                 }
 
@@ -153,27 +173,7 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
             });
 
 
-            reference.orderByChild("date").addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
 
-                @SuppressLint("ResourceType")
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        modelDiary = ds.getValue(ModelDiary.class);
-                        diaries.add(modelDiary);
-                    }
-
-                    adapterDiary = new AdapterDiary(Dashboard.this, diaries);
-                    binding.rvDiary.setAdapter(adapterDiary);
-                    binding.noItem.setVisibility(View.GONE);
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    binding.noItem.setVisibility(View.VISIBLE);
-                }
-            });
 
         dialog.dismiss();
     }

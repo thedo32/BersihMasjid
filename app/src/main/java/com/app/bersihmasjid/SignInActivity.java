@@ -23,12 +23,8 @@ public class SignInActivity extends AppCompatActivity {
 
     ActivitySigninBinding binding;
     FirebaseAuth auth;
-
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -71,22 +71,22 @@
             android:inputType="textVisiblePassword"
             android:autofillHints="password"
             tools:ignore="VisualLintTextFieldSize" />
+<EditText
+        android:id="@+id/mobile"
+        android:hint="@string/telepon"
+        android:cursorVisible="true"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/phone"
+        android:layout_marginTop="20dp"
+        android:textCursorDrawable="@color/black"
+        android:textColorHint="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_text_white"
+        android:inputType="phone"
+        android:importantForAutofill="no"
+        tools:ignore="VisualLintTextFieldSize" />
 
-        <EditText
-            android:id="@+id/mobile"
-            android:hint="@string/telepon"
-            android:cursorVisible="true"
-            android:drawablePadding="5dp"
-            android:drawableStart="@drawable/phone"
-            android:layout_marginTop="20dp"
-            android:textCursorDrawable="@color/black"
-            android:textColorHint="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_text_white"
-            android:inputType="phone"
-            android:autofillHints="password"
-            tools:ignore="VisualLintTextFieldSize" />
 
         <Button
             android:id="@+id/signup"

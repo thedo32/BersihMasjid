@@ -619,7 +619,7 @@ public class StorageActivity extends AppCompatActivity {
         public void onFailure(@NonNull Exception exception) {
             int errorCode = ((StorageException) exception).getErrorCode();
             String errorMessage = exception.getMessage();
-            // test the errorCode and errorMessage, and handle accordingly
+            // custom_bgtwo the errorCode and errorMessage, and handle accordingly
         }
     }
     // [END storage_custom_failure_listener]

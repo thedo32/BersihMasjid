@@ -48,6 +48,7 @@
                 <TextView
                     android:id="@+id/update"
                     android:text="Admin Update:"
+                    android:background="@drawable/custom_bgthree_s"
                     android:textColor="@color/black"
                     android:textSize="10sp"
                     android:layout_width="wrap_content"

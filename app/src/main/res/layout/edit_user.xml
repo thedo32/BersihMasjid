@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/custom_text_white"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_bgone">
 
-<!--TODO  Layout  belum selesai, Delete disabled-->
+
     <TextView
         android:id="@+id/label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:gravity="center_horizontal"
@@ -25,7 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="12dp">
+        android:layout_marginBottom="27dp"
+        android:background="@drawable/custom_text">
 
         <!--android:drawableLeft="@drawable/email"-->
 
@@ -34,9 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/custom_text"
+            android:background="@drawable/custom_text_white"
 
             android:clickable="true"
             android:drawablePadding="5dp"
@@ -49,16 +51,17 @@
             tools:ignore="VisualLintTextFieldSize,SpeakableTextPresentCheck"
             tools:listheader="Nama" />
 
-        <TextView
+        <EditText
             android:id="@+id/point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="120dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/custom_text"
+            android:background="@drawable/custom_text_white"
             android:cursorVisible="true"
             android:drawablePadding="5dp"
+            android:enabled="false"
             android:hint="123456"
             android:importantForAutofill="no"
             android:textColorHint="@color/black"
@@ -69,10 +72,10 @@
             android:id="@+id/addpoint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="105dp"
+            android:layout_marginLeft="150dp"
             android:layout_marginTop="120dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/custom_text"
+            android:background="@drawable/custom_text_white"
             android:cursorVisible="true"
             android:drawablePadding="5dp"
             android:hint="0"
@@ -85,15 +88,15 @@
             tools:ignore="VisualLintTextFieldSize" />
         <!--android:drawableLeft="@drawable/email"-->
 
-        <TextView
+        <EditText
             android:id="@+id/account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="190dp"
+            android:layout_marginTop="185dp"
             android:layout_marginRight="5dp"
             android:autofillHints="0.000"
-            android:background="@drawable/custom_text"
+            android:background="@drawable/custom_text_white"
             android:cursorVisible="true"
             android:drawablePadding="10dp"
             android:hint="bank account"
@@ -101,14 +104,14 @@
             android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
 
-        <TextView
+        <EditText
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="260dp"
+            android:layout_marginTop="252dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/custom_text"
+            android:background="@drawable/custom_text_white"
             android:cursorVisible="true"
             android:drawablePadding="5dp"
             android:hint="@string/description_hint"
@@ -118,18 +121,19 @@
             android:minLines="3"
             android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize" />
+
         <EditText
             android:id="@+id/mobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="370dp"
-            android:minHeight="48dp"
+            android:layout_marginTop="380dp"
             android:layout_marginRight="5dp"
             android:autofillHints="0.000"
             android:background="@drawable/custom_text_white"
             android:cursorVisible="true"
             android:drawablePadding="10dp"
+            android:minHeight="48dp"
             android:textColorHint="@color/white"
             tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -138,14 +142,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="430dp"
+            android:layout_marginTop="445dp"
             android:layout_marginRight="5dp"
             android:autofillHints="0.000"
-            android:textColor="@color/white"
-            android:background="@color/white"
+            android:background="@drawable/custom_text_white_s"
             android:cursorVisible="true"
             android:drawablePadding="10dp"
-            android:textColorHint="@color/white"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <TextView
@@ -153,31 +158,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="460dp"
+            android:layout_marginTop="470dp"
             android:layout_marginRight="5dp"
             android:autofillHints="0.000"
-            android:background="@color/white"
-            android:cursorVisible="true"
+            android:background="#00FFFFFF"
+            android:cursorVisible="false"
             android:drawablePadding="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
+            android:visibility="invisible"
             tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,VisualLintOverlap" />
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <Button
             android:id="@+id/edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="36dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/email"
             android:contentDescription="@string/submit_edit"
             android:enabled="true"
-            android:src="@drawable/edit"
-            app:rippleColor="@color/teal_200"
+            android:text="Edit"
             tools:ignore="ImageContrastCheck" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <Button
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -185,8 +192,9 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="36dp"
             android:contentDescription="@string/submit_edit"
-            android:enabled="false"
+            android:enabled="true"
             android:src="@drawable/close"
+            android:text="HAPUS"
             app:rippleColor="@color/teal_200"
             tools:ignore="ImageContrastCheck" />
 

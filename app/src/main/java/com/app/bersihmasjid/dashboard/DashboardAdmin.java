@@ -48,7 +48,7 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
     ProgressDialog dialog;
     String unique;
     String uniqueId;
-    String admin;
+
 
 
 
@@ -63,7 +63,6 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
         auth = FirebaseAuth.getInstance();
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         unique = preferences.getString("unique","");
-        admin = "XDb6D7GO3zYOlTYkVbWI0aLvXKD2";
 
         referenceall = FirebaseDatabase.getInstance().getReference("DataDiary").child("data");
         diaries = new ArrayList<>();
@@ -83,11 +82,7 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
           binding.add.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                  if (unique.equals(admin)) {
-                      startActivity(new Intent(DashboardAdmin.this, AddDiary.class));
-                  }else{
-                      startActivity(new Intent(DashboardAdmin.this, AddDiaryUser.class));
-                  }
+                 startActivity(new Intent(DashboardAdmin.this, AddDiary.class));
               }
           });
 

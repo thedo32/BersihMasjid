@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import com.app.bersihmasjid.databinding.ActivitySignupBinding;
 import com.app.bersihmasjid.model.UserDiary;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,11 +21,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SignUpActivity extends AppCompatActivity {
     ActivitySignupBinding binding;
     FirebaseAuth auth;
     ProgressDialog dialog;
     DatabaseReference reference;
+
+    // TODO snackbar belum lengkap - CoordinatorLayout coordiLayout;
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -59,6 +63,8 @@ public class SignUpActivity extends AppCompatActivity {
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         editor = preferences.edit();
 
+        // TODO snakbar belum lengkap coordiLayout = (CoordinatorLayout)binding;
+
 
 
         binding.signin.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +84,46 @@ public class SignUpActivity extends AppCompatActivity {
                 String password = binding.password.getText().toString();
                 mobile = binding.mobile.getText().toString();
 
-                storeDatatoFirebase(name, email, password);
+                if(password.length()>=8)
+                {
+                    Pattern letter = Pattern.compile("[a-zA-z]");
+                    Pattern digit = Pattern.compile("[0-9]");
+                    Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+                    //Pattern eight = Pattern.compile (".{8}");
+
+
+                    Matcher hasLetter = letter.matcher(password);
+                    Matcher hasDigit = digit.matcher(password);
+                    Matcher hasSpecial = special.matcher(password);
+
+                    if ((hasLetter.find() && hasDigit.find() && hasSpecial.find())) {
+                        storeDatatoFirebase(name, email, password);
+                    }else{
+
+                        /*Snackbar snackbar = Snackbar
+                                .make( TODO snakbar belum lengkap,"Password tidak boleh kurang dari 8 Karater, " +
+                                        "\n"+ "harus ada karakter huruf kecil besar, angka," +
+                                        " \n"+ "dan special seperti !@#$%&*()_+=|<>?{}[]~- ",Snackbar.LENGTH_SHORT);
+                        snackbar.show();*/
+
+                        Toast.makeText(SignUpActivity.this, "Password tidak boleh kurang dari 8 Karater dan...",
+                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUpActivity.this, "harus ada kombinasi huruf kecil besar, angka dan...",
+                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUpActivity.this, "special seperti !@#$%&*()_+=|<>?{}[]~- ",
+                                Toast.LENGTH_LONG).show();
+
+                    }
+
+                }else {
+                    Toast.makeText(SignUpActivity.this, "Password tidak boleh kurang dari 8 Karater",
+                            Toast.LENGTH_LONG).show();
+
+                }
+
+
+                //storeDatatoFirebase(name, email, password);
+
 
             }
         });
@@ -125,4 +170,5 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
     }
+
 }

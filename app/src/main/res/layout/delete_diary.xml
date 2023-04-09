@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/custom_text_white"
+    android:background="@drawable/custom_bgone"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -29,7 +29,7 @@
             android:textColorHint="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_text" />
+            android:background="@drawable/custom_text_white" />
         <!--android:drawableLeft="@drawable/email"-->
 
         <TextView
@@ -41,7 +41,7 @@
             android:maxLines="5"
             android:minLines="5"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_text" />
+            android:background="@drawable/custom_text_white" />
         <!--android:drawableLeft="@drawable/password" > -->
 
         <Button

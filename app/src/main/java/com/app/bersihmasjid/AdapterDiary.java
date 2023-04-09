@@ -174,9 +174,6 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         }
     }
 
-
-
-
     private void editDiary(ModelDiary md, EditDiaryBinding editBinding){
         Dialog dialog = new Dialog(context);
         View view = editBinding.getRoot();
@@ -209,15 +206,15 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                     }
 
 
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+        }
+    }
+    @Override
+    public void onCancelled(@NonNull DatabaseError error) {
+    }
+});
 
         editBinding.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
+@Override
             public void onClick(View view) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd");
                 Calendar calendar = Calendar.getInstance();

@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +22,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,13 +30,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 
 public class AdapterUser extends AppCompatActivity {
     EditUserBinding binding;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-    DatabaseReference reference;
 
     DatabaseReference referenceall;
 
@@ -51,7 +49,6 @@ public class AdapterUser extends AppCompatActivity {
     String point;
     String account;
     String description;
-    String points;
 
   /*  String[] namess = {
             "Karin",
@@ -77,7 +74,6 @@ public class AdapterUser extends AppCompatActivity {
         binding = EditUserBinding.inflate(getLayoutInflater());
         FirebaseApp.initializeApp(AdapterUser.this);
         auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
         uniqueId = auth.getUid();
         View view = binding.getRoot();
         setContentView(view);
@@ -89,61 +85,7 @@ public class AdapterUser extends AppCompatActivity {
         //ArrayAdapter<String> adapter = new ArrayAdapter<>(AdapterUser.this,simple_spinner_dropdown_item, namess);
         dialog = new ProgressDialog( AdapterUser.this);
         binding.point.setText("1"); //menambah point 1
-
-        referenceall.addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
-
-            @SuppressLint("ResourceType")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    String keys   = ds.getKey();
-
-                    referenceall.child(keys).addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
-
-                        @SuppressLint("ResourceType")
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot ds : snapshot.getChildren()) {
-
-                                String key = ds.getKey();
-
-                                if (key.equals("name")) {
-                                    //Log.d("NAMESSS", ds.getValue().toString());
-                                    namess.add(ds.getValue().toString());
-                                    Collections.sort(namess);
-
-                                }
-                                ArrayAdapter<String> adapter = new ArrayAdapter<>(AdapterUser.this, simple_spinner_dropdown_item, namess);
-                                binding.name.setAdapter((adapter));
-
-
-
-
-                                //ArrayAdapter<String> adapter = new ArrayAdapter<>(AdapterUser.this, simple_spinner_dropdown_item, namess);
-
-
-                            }
-                            //final ArrayAdapter<String> adapter = new ArrayAdapter<>(AdapterUser.this,simple_spinner_dropdown_item, names);
-
-                           //binding.name.setAdapter((adapter));
-
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
+        reloadname();
 
 
         binding.name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -160,40 +102,39 @@ public class AdapterUser extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         for (DataSnapshot dss : snapshot.getChildren()) {
-                            String keyss = dss.getKey().toString();
-                            Log.d("KEYSS",keyss);
+                            String keyss = dss.getKey();
+
+                            assert keyss != null;
                             referenceall.child(keyss).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for (DataSnapshot dsss : snapshot.getChildren()) {
                                         String keysss = dsss.getKey();
-                                        Log.d("KEYSSs",keysss);
 
+                                        assert keysss != null;
                                         if (keysss.equals("name")) {
-                                            String namesss = dsss.getValue().toString();
+                                            String namesss = Objects.requireNonNull(dsss.getValue()).toString();
 
                                             if (namesss.equals(name)) {
-                                                Log.d ("NAMESSS1", namesss);
-                                                Log.d ("NAMESSS2", name);
+
                                                 binding.keys.setText(keyss);
-                                                Log.d ("UNIQUESSSSS1", unique);
-                                                Log.d ("UNIQUESSSSS2", keyss);
+
                                                 String keyss = binding.keys.getText().toString();
-                                                Log.d("UNIQUESSSS3", keyss);
+
                                                 referenceall.child(keyss).addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                         for (DataSnapshot dssss : snapshot.getChildren()) {
                                                             String keysss = dssss.getKey();
-                                                            Log.d("KEYSSs",keysss);
 
-                                                            if (keysss.equals("mobile")) {
-                                                                binding.mobile.setText(dssss.getValue().toString());
+
+                                                            if (Objects.equals(keysss, "mobile")) {
+                                                                binding.mobile.setText(Objects.requireNonNull(dssss.getValue()).toString());
                                                             }
-                                                            if (keysss.equals("email")) {
-                                                                binding.email.setText(dssss.getValue().toString());
+                                                            if (Objects.equals(keysss, "email")) {
+                                                                binding.email.setText(Objects.requireNonNull(dssss.getValue()).toString());
                                                             }
-                                                            if (keysss.equals("point")) {
+                                                            if (Objects.equals(keysss, "point")) {
                                                                 binding.point.setText(dssss.getValue().toString());
                                                             }
                                                             if (keysss.equals("account")) {
@@ -263,16 +204,14 @@ public class AdapterUser extends AppCompatActivity {
                 String points = binding.point.getText().toString();
                 String pointsss = binding.addpoint.getText().toString();
 
-                if (!pointsss.equals(null)){
-                    int pointss = Integer.parseInt(points ) + Integer.parseInt( pointsss);
-                    point = String.valueOf(pointss);
-                }
+                int pointss = Integer.parseInt(points ) + Integer.parseInt( pointsss);
+                point = String.valueOf(pointss);
 
 
-                Log.d("SELECTED NAME",name);
+
 
                 UserDiary uEdit = new UserDiary(name, email, mobile, point, account, description);
-                //Log.d("UNIQUE",unique);
+
 
 
                 referenceall.child(keyss).setValue(uEdit).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -300,7 +239,7 @@ public class AdapterUser extends AppCompatActivity {
 
         });
 
-        //TODO Adapter User delete belum selesai
+
 
         binding.delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -314,22 +253,91 @@ public class AdapterUser extends AppCompatActivity {
                 String mobile = binding.mobile.getText().toString();
                 String point = binding.point.getText().toString();
 
-                UserDiary DelUser = new UserDiary(name, email, mobile, point, account, description);
-                users.DeleteUser(DelUser);
+                //users.DeleteUser(DelUser);
 
-
-                new Handler().postDelayed(new Runnable() {
+                referenceall.child(keyss).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void run() {
-                        Log.d("DeleteBerhasil","delete confirmed");
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(AdapterUser.this, "Data sudah dihapus",
+                                    Toast.LENGTH_SHORT).show();
+
+
+                        }else {
+                            Toast.makeText(AdapterUser.this, "Data gagal dihapus",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                        clearname();
+                        reloadname();
                         dialog.dismiss();
-
                     }
+                });
 
-                },360);
             }
         });
 
     }
+private void reloadname(){
+    referenceall.addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
 
+        @SuppressLint("ResourceType")
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            for (DataSnapshot ds : snapshot.getChildren()) {
+                String keys   = ds.getKey();
+
+                assert keys != null;
+                referenceall.child(keys).addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
+
+                    @SuppressLint("ResourceType")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+
+                            String key = ds.getKey();
+                            assert key != null;
+                            if (key.equals("name")) {
+
+                                namess.add(Objects.requireNonNull(ds.getValue()).toString());
+                                Collections.sort(namess);
+
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(AdapterUser.this, simple_spinner_dropdown_item, namess);
+                            binding.name.setAdapter((adapter));
+
+
+
+
+                            //ArrayAdapter<String> adapter = new ArrayAdapter<>(AdapterUser.this, simple_spinner_dropdown_item, namess);
+
+
+                        }
+                        //final ArrayAdapter<String> adapter = new ArrayAdapter<>(AdapterUser.this,simple_spinner_dropdown_item, names);
+
+                        //binding.name.setAdapter((adapter));
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+
+    });
+}
+private void clearname(){
+    namess.clear();
+    ArrayAdapter<String> adapter = new ArrayAdapter<>(AdapterUser.this, simple_spinner_dropdown_item, namess);
+    binding.name.setAdapter((adapter));
+}
 }

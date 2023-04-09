@@ -81,8 +81,7 @@ public class AddDiary extends AppCompatActivity {
                         }
                     }
                 });
-
-                    dialog.dismiss();
+                dialog.dismiss();
                 // storeDatatoFirebase(name, email, password);
             }
 
