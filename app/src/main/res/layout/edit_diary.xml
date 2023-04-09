@@ -71,6 +71,7 @@
             android:cursorVisible="true"
             android:drawablePadding="10dp"
             android:hint="@string/titik_lokasi"
+            android:inputType="text"
             android:textColorHint="@color/black"
             android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
@@ -87,6 +88,7 @@
             android:cursorVisible="true"
             android:drawablePadding="10dp"
             android:hint="@string/titik_lokasi"
+            android:inputType="text"
             android:minHeight="48dp"
             android:textColorHint="@color/black"
             android:textCursorDrawable="@color/black"
