@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -241,12 +242,14 @@ public class MapActivityNew extends AppCompatActivity {
         double dnTEST = deg2UTMTest.Northing;
 
       if  (Math.abs(deHOME-deTEST) > 50 ) {
-          Log.d("ABSENSI", "Anda belum berada di sekitar lokasi ");
-          return;
+          Toast.makeText(MapActivityNew.this, "Anda belum berada di sekitar lokasi ",
+                  Toast.LENGTH_LONG).show();
       }else if (Math.abs(dnHOME - dnTEST) > 50) {
-          Log.d("ABSENSI", "Anda belum berada di sekitar lokasi ");
+          Toast.makeText(MapActivityNew.this, "Anda belum berada di sekitar lokasi ",
+                  Toast.LENGTH_LONG).show();
       } else {
-          Log.d("ABSENSI", "Anda sudah berada di sekitar lokasi " );
+          Toast.makeText(MapActivityNew.this, "Anda belum berada di sekitar lokasi ",
+                  Toast.LENGTH_LONG).show();
       }
 
 
