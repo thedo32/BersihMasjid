@@ -1,5 +1,6 @@
 package com.app.bersihmasjid;
 
+import static android.location.LocationManager.GPS_PROVIDER;
 import static android.location.LocationManager.NETWORK_PROVIDER;
 
 import android.annotation.SuppressLint;
@@ -58,6 +59,7 @@ import org.osmdroid.views.overlay.Polygon;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Bare bones osmdroid example
@@ -66,9 +68,10 @@ import java.util.Locale;
  * @author Alex O'Ree
  */
 
-public class MapActivityNew extends AppCompatActivity {
+public class MapActivityNew extends AppCompatActivity implements LocationListener{
     private MapView mapView = null;
     private final FloatingActionButton logOut = null;
+    MainActivity mainActivity;
     private ScaleBarOverlay mScaleBarOverlay;
     ItemizedIconOverlay<OverlayItem> currentLocationOverlay;
     SharedPreferences preferences;
@@ -95,8 +98,14 @@ public class MapActivityNew extends AppCompatActivity {
 
     MyLocationNewOverlay locationOverlay;
 
-    protected LocationManager locationManager;
-    protected LocationListener locationListener;
+    Intent intentThatCalled;
+    public double latitude;
+    public double longitude;
+    public LocationManager locationManager;
+    public Criteria criteria;
+    public String bestProvider;
+
+    String voice2text; //added
 
 
     //DefaultResourceProxyImpl resourceProxy;
@@ -128,6 +137,9 @@ public class MapActivityNew extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         mapView = binding.mapview;
+        intentThatCalled = getIntent();
+        voice2text = intentThatCalled.getStringExtra("v2txt");
+        getLocation();
 
 
         radiusMarkerClusterer = new RadiusMarkerClusterer(MapActivityNew.this);
@@ -182,9 +194,12 @@ public class MapActivityNew extends AppCompatActivity {
         MarkerInfoWindow infoWindow = new MarkerInfoWindow
         (org.osmdroid.library.R.layout.bonuspack_bubble,mapView);*/
 
+
+
         Marker appMarker = new Marker(mapView);
         Marker homeMarker = new Marker(mapView);
         Marker testMarker = new Marker(mapView);
+        Marker mylocMarker = new Marker(mapView);
 
         if (!Latd.equals("")) {
             Latdd = Latd;
@@ -205,24 +220,27 @@ public class MapActivityNew extends AppCompatActivity {
         GeoPoint uisumbarLocation = new GeoPoint(Double.parseDouble(Latdd), Double.parseDouble(Londd), 0);
         GeoPoint home = new GeoPoint(-0.8917953507984866, 100.35467135562939, 0);
         GeoPoint test = new GeoPoint(-0.8917951843203211, 100.35512062059152, 0);
+        GeoPoint myloc = new GeoPoint(latitude, longitude, 0);
+        Log.d("TEEESSSST","TEST:"+latitude+","+longitude);
 
-        staticCluster = new StaticCluster(home);
+
+        //staticCluster = new StaticCluster(home);
 
 
         mapController.setCenter(uisumbarLocation);
-        GpsMyLocationProvider provider = new GpsMyLocationProvider(MapActivityNew.this);
+       /* GpsMyLocationProvider provider = new GpsMyLocationProvider (MapActivityNew.this);
         provider.addLocationSource(NETWORK_PROVIDER);
+        provider.getLocationSources();
         locationOverlay = new MyLocationNewOverlay(provider, mapView);
         locationOverlay.enableFollowLocation();
         locationOverlay.enableMyLocation();
-        //locationOverlay.setEnableAutoStop(true);
         locationOverlay.runOnFirstFix(new Runnable() {
             public void run() {
                 Log.d("MyTag", String.format("First location fix: %s", locationOverlay.getLastFix()));
             }
-        });
+        });*/
 
-
+        //mapController.animateTo(locationOverlay.getMyLocation());
 
 
         homeMarker.setIcon(getResources().getDrawable(R.drawable.home));
@@ -235,6 +253,12 @@ public class MapActivityNew extends AppCompatActivity {
                 "\n Batas - Radius 50 Meter dari Rumah" + "\n\n Titik GPS: \n" + test);
         testMarker.setPosition(test);
         testMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+
+        mylocMarker.setIcon(getResources().getDrawable(R.drawable.name));
+        mylocMarker.setTitle(" Detail Lokasi: " +
+                "\n Lokasi sekarang" + "\n\n Titik GPS: \n" + myloc);
+        mylocMarker.setPosition(myloc);
+        mylocMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
 
         appMarker.setIcon(getResources().getDrawable(R.drawable.home));
@@ -249,18 +273,19 @@ public class MapActivityNew extends AppCompatActivity {
         mapView.setMultiTouchControls(true);
         mapView.getOverlays().add(appMarker);
         mapView.getOverlays().add(homeMarker);
+        mapView.getOverlays().add(mylocMarker);
         mapView.getOverlays().add(testMarker);
         mapView.getOverlayManager().add(locationOverlay);
         mapController.setZoom(18.5);
-        mapController.animateTo(locationOverlay.getMyLocation());
+        mapController.animateTo(myloc);
+
         mScaleBarOverlay.drawLatitudeScale(true);
         mScaleBarOverlay.drawLongitudeScale(true);
         //staticCluster.setMarker(homeMarker);
         //staticCluster.mMarker.showInfoWindow();
         //staticCluster.getBoundingBox();
-
-        radiusMarkerClusterer.setMaxClusteringZoomLevel(5);
-        radiusMarkerClusterer.setRadius(10);
+        //radiusMarkerClusterer.setMaxClusteringZoomLevel(5);
+        //radiusMarkerClusterer.setRadius(10);
 
         Polygon oPolygon = new Polygon();
         final double radius = 50;
@@ -272,22 +297,33 @@ public class MapActivityNew extends AppCompatActivity {
         mapView.getOverlays().add(oPolygon);
 
         Deg2UTM deg2UTMHome = new Deg2UTM(home.getLatitude(), home.getLongitude());
-        Deg2UTM deg2UTMTest = new Deg2UTM(test.getLatitude(), test.getLongitude());
+        Deg2UTM deg2UTMMyLoc = new Deg2UTM(latitude, longitude);
+        //Deg2UTM deg2UTMTest = new Deg2UTM(test.getLatitude(), test.getLongitude());
 
         double deHOME = deg2UTMHome.Easting;
         double dnHOME = deg2UTMHome.Northing;
-        double deTEST = deg2UTMTest.Easting;
+        /*double deTEST = deg2UTMTest.Easting;
         double dnTEST = deg2UTMTest.Northing;
+*/      final double deMyLoc = deg2UTMMyLoc.Easting;
+        final double dnMyLoc = deg2UTMMyLoc.Northing;
 
-        if (Math.abs(deHOME - deTEST) >= 51) {
+
+        if (Math.abs(deHOME - deMyLoc) >= 51) {
             Toast.makeText(MapActivityNew.this, "Anda belum berada di sekitar lokasi ",
                     Toast.LENGTH_LONG).show();
-        } else if (Math.abs(dnHOME - dnTEST) >= 51) {
+            Toast.makeText(MapActivityNew.this, "Absensi Anda Masih Gagal",
+                    Toast.LENGTH_LONG).show();
+        } else if (Math.abs(dnHOME - dnMyLoc) >= 51) {
             Toast.makeText(MapActivityNew.this, "Anda belum berada di sekitar lokasi ",
+                    Toast.LENGTH_LONG).show();
+            Toast.makeText(MapActivityNew.this, "Absensi Anda Masih Gagal",
                     Toast.LENGTH_LONG).show();
         } else {
+            Toast.makeText(MapActivityNew.this, "SELAMAT, Absensi Anda berhasil ",
+                    Toast.LENGTH_LONG).show();
             Toast.makeText(MapActivityNew.this, "Anda sudah berada di sekitar lokasi ",
                     Toast.LENGTH_LONG).show();
+
         }
 
 
@@ -313,7 +349,7 @@ public class MapActivityNew extends AppCompatActivity {
         Configuration.getInstance().load(MapActivityNew.this,
                 PreferenceManager.getDefaultSharedPreferences(MapActivityNew.this));
         //add
-        locationOverlay.enableMyLocation();
+        //locationOverlay.enableMyLocation();
         if (mapView != null) {
             mapView.onResume();
         }
@@ -325,7 +361,8 @@ public class MapActivityNew extends AppCompatActivity {
         super.onPause();
         Configuration.getInstance().save(getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
-        locationOverlay.disableMyLocation();
+       // locationOverlay.disableMyLocation();
+        locationManager.removeUpdates(this);
         if (mapView != null) {
             mapView.onPause();
         }
@@ -418,4 +455,90 @@ public class MapActivityNew extends AppCompatActivity {
             longitude = longitude / 10000000;
         }
     }
+    public static boolean isLocationEnabled(Context context) {
+        //...............
+        return true;
+    }
+
+    protected void getLocation() {
+        if (isLocationEnabled(this)) {
+            locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            criteria = new Criteria();
+            bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true)).toString();
+
+            //You can still do this if you like, you might get lucky:
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            Location location = locationManager.getLastKnownLocation(bestProvider);
+            if (location != null) {
+                Log.e("TAG", "GPS is on");
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                /*Toast.makeText(MapActivityNew.this,
+                        "latitude:" + latitude + " longitude:" + longitude, Toast.LENGTH_SHORT).show();*/
+                searchNearestPlace(voice2text);
+            } else {
+                //This is what you need:
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                locationManager.requestLocationUpdates(bestProvider, 1000, 0, this);
+            }
+        }
+        else
+        {
+            //prompt user to enable location....
+            //.................
+        }
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        //Hey, a non null location! Sweet!
+
+        //remove location callback:
+        locationManager.removeUpdates(this);
+
+        //open the map:
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        Toast.makeText(MapActivityNew.this, "latitude:" + latitude + " longitude:" + longitude, Toast.LENGTH_SHORT).show();
+        searchNearestPlace(voice2text);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    public void searchNearestPlace(String v2txt) {
+        //.....
+    }
+
 }

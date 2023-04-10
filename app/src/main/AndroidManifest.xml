@@ -36,6 +36,7 @@
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".MapActivityNew"/>
         <activity android:name=".MapActivity"/>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".StorageActivity"/>
         <activity android:name=".Forgot"/>
         <activity android:name=".AdapterUser"/>
