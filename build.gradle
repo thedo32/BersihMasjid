@@ -5,10 +5,10 @@ buildscript {
         // Make sure that you have the following two repositories
         google()  // Google's Maven repository
         mavenCentral()  // Maven Central repository
-     /*   flatDir {
+        //maven { url "https://jitpack.io" } //OSMbonuspack
+       flatDir {
             dirs 'libs'
         }
-*/
     }
 
     dependencies {

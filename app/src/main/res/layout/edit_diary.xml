@@ -15,7 +15,7 @@
         android:text="BUKAN DATA ANDA TIDAK BISA EDIT"
         android:textSize="12sp"
         android:textColor="#FFE80404"
-        tools:ignore="VisualLintOverlap" />
+        tools:ignore="HardcodedText,VisualLintOverlap" />
 
     <RelativeLayout
         android:layout_width="match_parent"

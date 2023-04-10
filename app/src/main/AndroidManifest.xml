@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".SignInActivity"/>
         <activity android:name=".SignUpActivity"/>
+        <activity android:name=".MapActivityNew"/>
         <activity android:name=".MapActivity"/>
         <activity android:name=".StorageActivity"/>
         <activity android:name=".Forgot"/>
@@ -36,3 +37,7 @@
 <!--<uses-permission android:name="android.permission.INTERNET"/>"-->
 
 </manifest>
+
+
+
+

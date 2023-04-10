@@ -120,7 +120,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 editor.putString("Lond",Lond);
                 editor.apply();
                 editor.commit();
-                context.startActivity(new Intent(context, MapActivity.class));
+                context.startActivity(new Intent(context, MapActivityNew.class));
 
             }
 

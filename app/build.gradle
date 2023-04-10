@@ -38,6 +38,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -57,14 +58,16 @@ dependencies {
     //implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     //Add the depedency for OpenStreetMap
-    implementation 'org.osmdroid:osmdroid-android:6.1.15'
+    implementation 'org.osmdroid:osmdroid-android:6.1.16'
 
-    /*//OpenStreetMap bonuspack
-    implementation  name:'osmbonuspack_6.9.0', ext:'aar'*/
-    /*implementation fileTree(dir: 'libs', include: ['*.aar','*.jar'])
+    //OpenStreetMap bonuspack
+    //implementation 'com.github.MKergall:osmbonuspack:6.9.0'
+    //implementation files('https://github.com/grote/OSMBonusPack')
+    //implementation files("com.github.MKergall:osmbonuspack:6.9.0")
+    implementation fileTree(dir: 'libs', include: ['osmbonuspack_6.9.0.aar'])
     implementation 'org.apache.commons:commons-lang3:3.8.1'
     implementation 'com.google.code.gson:gson:2.8.9'
-    implementation 'com.squareup.okhttp3:okhttp:4.7.2'*/
+    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
 
     // Add this in addition to your other dependencies
     implementation "androidx.activity:activity:1.6.0-alpha05"
