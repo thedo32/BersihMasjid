@@ -46,7 +46,8 @@ public class AdapterUser extends AppCompatActivity {
     String unique;
     String mobile;
     String email;
-    String point;
+    String point="0";
+    String addpoint="0";
     String account;
     String description;
 
@@ -84,16 +85,15 @@ public class AdapterUser extends AppCompatActivity {
         referenceall = FirebaseDatabase.getInstance().getReference("UserDiary").child("user");
         //ArrayAdapter<String> adapter = new ArrayAdapter<>(AdapterUser.this,simple_spinner_dropdown_item, namess);
         dialog = new ProgressDialog( AdapterUser.this);
-        binding.point.setText("1"); //menambah point 1
-        reloadname();
 
+        reloadname();
 
         binding.name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                binding.point.setText("1");
+              /*  binding.point.setText("1");
                 binding.account.setText("mandiri");
-                binding.description.setText("keterangan");
+                binding.description.setText("keterangan");*/
                 String name = binding.name.getSelectedItem().toString();
 
 
@@ -136,6 +136,9 @@ public class AdapterUser extends AppCompatActivity {
                                                             }
                                                             if (Objects.equals(keysss, "point")) {
                                                                 binding.point.setText(dssss.getValue().toString());
+                                                            }
+                                                            if (Objects.equals(keysss, "addpoint")) {
+                                                                binding.addpoint.setText(dssss.getValue().toString());
                                                             }
                                                             if (keysss.equals("account")) {
                                                                 binding.account.setText(dssss.getValue().toString());
@@ -206,13 +209,9 @@ public class AdapterUser extends AppCompatActivity {
 
                 int pointss = Integer.parseInt(points ) + Integer.parseInt( pointsss);
                 point = String.valueOf(pointss);
+                addpoint ="0";
 
-
-
-
-                UserDiary uEdit = new UserDiary(name, email, mobile, point, account, description);
-
-
+                UserDiary uEdit = new UserDiary(name, email, mobile, point, addpoint, account, description);
 
                 referenceall.child(keyss).setValue(uEdit).addOnCompleteListener(new OnCompleteListener<Void>() {
 

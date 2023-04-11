@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.app.bersihmasjid.AdapterDiary;
+import com.app.bersihmasjid.AdapterUser;
 import com.app.bersihmasjid.SignInActivity;
 import com.app.bersihmasjid.databinding.ActivityDashboardBinding;
 import com.app.bersihmasjid.databinding.AdapterDiaryBinding;
@@ -49,6 +50,8 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
     String unique;
     String uniqueId;
     String admin;
+    String uniqueauth;
+    String emailauth;
 
 
 
@@ -61,6 +64,8 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
         View view = binding.getRoot();
         setContentView(view);
         auth = FirebaseAuth.getInstance();
+        uniqueauth  = auth.getCurrentUser().getUid();
+        emailauth = auth.getCurrentUser().getEmail();
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         unique = preferences.getString("unique","");
         admin = "XDb6D7GO3zYOlTYkVbWI0aLvXKD2";
@@ -73,6 +78,7 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
         dialog = new ProgressDialog( Dashboard.this);
 
         binding.rvDiary.setLayoutManager(linearLayoutManager);
+
 
           binding.add.setOnClickListener(new View.OnClickListener() {
               @Override
@@ -164,6 +170,8 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
                     });
 
                 }
+
+
 
 
                 @Override

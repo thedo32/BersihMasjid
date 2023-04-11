@@ -17,9 +17,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.app.bersihmasjid.AdapterUser;
 import com.app.bersihmasjid.MainActivity;
 import com.app.bersihmasjid.MarkerClusterer;
 import com.app.bersihmasjid.R;
@@ -27,10 +29,16 @@ import com.app.bersihmasjid.Splash;
 import com.app.bersihmasjid.StaticCluster;
 import com.app.bersihmasjid.databinding.ActivityMapBinding;
 import com.app.bersihmasjid.databinding.ActivityMapLoginBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -62,7 +70,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
     private ScaleBarOverlay mScaleBarOverlay;
     ItemizedIconOverlay<OverlayItem> currentLocationOverlay;
     SharedPreferences preferences;
-    DatabaseReference referenceui;
+    DatabaseReference reference;
     String unique;
     String uniqueauth;
     FirebaseAuth auth;
@@ -116,7 +124,8 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         desc = preferences.getString("desc", "Mushala Pemuda KNPI Sumbar");
         FirebaseApp.initializeApp(MapActivityLog.this);
 
-        //referencepadang = FirebaseDatabase.getInstance().getReference().child("logopadang");
+        reference = FirebaseDatabase.getInstance().getReference("UserDiary").child("user")
+                .child(uniqueauth);
         //setContentView(R.layout.activity_map); - use bindings
         //mapView = findViewById(R.id.mapview); - use bindings
         binding = ActivityMapLoginBinding.inflate(getLayoutInflater());
@@ -216,7 +225,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         //staticCluster = new StaticCluster(home);
 
 
-        mapController.setCenter(apploc);
+
        /* GpsMyLocationProvider provider = new GpsMyLocationProvider (MapActivityLog.this);
         provider.addLocationSource(NETWORK_PROVIDER);
         provider.getLocationSources();
@@ -266,6 +275,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         mapView.getOverlays().add(testMarker);
         mapView.getOverlayManager().add(locationOverlay);
         mapController.setZoom(18.5);
+        mapController.setCenter(apploc);
         mapController.animateTo(myloc);
 
         mScaleBarOverlay.drawLatitudeScale(true);
@@ -276,49 +286,92 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         //radiusMarkerClusterer.setMaxClusteringZoomLevel(5);
         //radiusMarkerClusterer.setRadius(10);
 
-        Polygon oPolygon = new Polygon();
-        final double radius = 50;
-        ArrayList<GeoPoint> circlePoints = new ArrayList<GeoPoint>();
+        Polygon hPolygon = new Polygon();
+        final double hradius = 50;
+        ArrayList<GeoPoint> hcirclePoints = new ArrayList<GeoPoint>();
         for (float f = 0; f < 360; f += 1) {
-            circlePoints.add(new GeoPoint(-0.8917953507984866, 100.35467135562939).destinationPoint(radius, f));
+            hcirclePoints.add(new GeoPoint(-0.8917953507984866, 100.35467135562939)
+                    .destinationPoint(hradius, f));
         }
-        oPolygon.setPoints(circlePoints);
+        hPolygon.setPoints(hcirclePoints);
+        mapView.getOverlays().add(hPolygon);
+
+        Polygon oPolygon = new Polygon();
+        final double oradius = 50;
+        ArrayList<GeoPoint> ocirclePoints = new ArrayList<GeoPoint>();
+        for (float f = 0; f < 360; f += 1) {
+            ocirclePoints.add(new GeoPoint(Double.parseDouble(Latdd), Double.parseDouble(Londd))
+                    .destinationPoint(oradius, f));
+        }
+        hPolygon.setPoints(ocirclePoints);
         mapView.getOverlays().add(oPolygon);
 
-        Deg2UTM deg2UTMHome = new Deg2UTM(home.getLatitude(), home.getLongitude());
+       // Deg2UTM deg2UTMHome = new Deg2UTM(home.getLatitude(), home.getLongitude());
+        Deg2UTM deg2UTMApp = new Deg2UTM(Double.parseDouble(Latdd), Double.parseDouble(Londd));
         Deg2UTM deg2UTMMyLoc = new Deg2UTM(latitude, longitude);
         //Deg2UTM deg2UTMTest = new Deg2UTM(test.getLatitude(), test.getLongitude());
 
-        double deHOME = deg2UTMHome.Easting;
-        double dnHOME = deg2UTMHome.Northing;
+        //double deHOME = deg2UTMHome.Easting;
+        //double dnHOME = deg2UTMHome.Northing;
+        double deApp = deg2UTMApp.Easting;
+        double dnApp = deg2UTMApp.Northing;
         /*double deTEST = deg2UTMTest.Easting;
         double dnTEST = deg2UTMTest.Northing;
 */      final double deMyLoc = deg2UTMMyLoc.Easting;
         final double dnMyLoc = deg2UTMMyLoc.Northing;
 
 
-        if (Math.abs(deHOME - deMyLoc) >= 51) {
+        if (Math.abs(deApp - deMyLoc) >= 51) {
             Toast.makeText(MapActivityLog.this, "Anda belum berada di sekitar lokasi ",
                     Toast.LENGTH_LONG).show();
             Toast.makeText(MapActivityLog.this, "Absensi Anda Masih Gagal",
                     Toast.LENGTH_LONG).show();
-        } else if (Math.abs(dnHOME - dnMyLoc) >= 51) {
+        } else if (Math.abs(dnApp - dnMyLoc) >= 51) {
             Toast.makeText(MapActivityLog.this, "Anda belum berada di sekitar lokasi ",
                     Toast.LENGTH_LONG).show();
             Toast.makeText(MapActivityLog.this, "Absensi Anda Masih Gagal",
                     Toast.LENGTH_LONG).show();
         } else {
+
             Toast.makeText(MapActivityLog.this, "SELAMAT, Absensi Anda berhasil ",
                     Toast.LENGTH_LONG).show();
             Toast.makeText(MapActivityLog.this, "Anda sudah berada di sekitar lokasi ",
                     Toast.LENGTH_LONG).show();
 
-        }
+            reference.child("addpoint").addListenerForSingleValueEvent(new ValueEventListener() {
 
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String addValue = snapshot.getValue().toString();
+
+                    if (addValue.equals("0")){
+                        reference.child("addpoint").setValue("1").addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                if (task.isSuccessful()){
+
+                                }else{
+                                    Toast.makeText(MapActivityLog.this, "Mengirim ke Database Gagal",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        });
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
         binding.logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MapActivityLog.this, Splash.class ));
+                startActivity(new Intent(MapActivityLog.this, MapActivity.class ));
             }
         });
         binding.maps.setOnClickListener(new View.OnClickListener() {

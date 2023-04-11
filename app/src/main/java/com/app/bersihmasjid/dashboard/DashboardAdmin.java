@@ -51,8 +51,6 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
 
 
 
-
-
       @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +61,6 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
         auth = FirebaseAuth.getInstance();
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         unique = preferences.getString("unique","");
-
         referenceall = FirebaseDatabase.getInstance().getReference("DataDiary").child("data");
         diaries = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(DashboardAdmin.this);

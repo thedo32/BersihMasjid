@@ -36,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     String mobile;
     String point = "0";
+    String addpoint = "0";
     String account = "";
     String description = "";
 
@@ -140,7 +141,7 @@ public class SignUpActivity extends AppCompatActivity {
                     FirebaseUser user = auth.getCurrentUser();
                     String unique = user.getUid();
 
-                    UserDiary diary = new UserDiary(name,email,mobile, point ,account, description);
+                    UserDiary diary = new UserDiary(name,email,mobile, point,addpoint,account, description);
 
                     reference.child("user").child(unique).setValue(diary).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

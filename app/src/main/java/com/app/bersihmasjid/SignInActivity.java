@@ -74,19 +74,16 @@ public class SignInActivity extends AppCompatActivity {
                     FirebaseUser user = auth.getCurrentUser();
                     String unique = user.getUid();
                     String email  = user.getEmail();
+                    editor.putString("unique", unique);
+                    editor.putString("email", email);
+                    //editor.putBoolean("autologin",true);
+                    editor.apply();
+                    editor.commit();
+
+
                     if (email.equals("jeffriargon@gmail.com")) {
-                        editor.putString("unique", unique);
-                        editor.putString("email", email);
-                        //editor.putBoolean("autologin",true);
-                        editor.apply();
-                        editor.commit();
                         startActivity(new Intent(SignInActivity.this, DashboardAdmin.class));
                     }else{
-                        editor.putString("unique", unique);
-                        editor.putString("email", email);
-                        //editor.putBoolean("autologin",true);
-                        editor.apply();
-                        editor.commit();
                         startActivity(new Intent(SignInActivity.this, Dashboard.class));
                     }
 

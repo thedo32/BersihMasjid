@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     //Add the depedency for OpenStreetMap
     implementation 'org.osmdroid:osmdroid-android:6.1.16'
+    implementation "com.google.android.gms:play-services-location:21.0.1"
 
     //OpenStreetMap bonuspack
     //implementation 'com.github.MKergall:osmbonuspack:6.9.0'

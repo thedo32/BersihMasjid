@@ -73,7 +73,7 @@ public class AddDiary extends AppCompatActivity {
                             Toast.makeText(AddDiary.this, "Diary Added",
                                     Toast.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(AddDiary.this, Dashboard.class));
+                            startActivity(new Intent(AddDiary.this, DashboardAdmin.class));
                            finish();
                         }else {
                             Toast.makeText(AddDiary.this, "Fail to Added",
