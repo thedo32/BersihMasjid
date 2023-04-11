@@ -1,23 +1,14 @@
-package com.app.bersihmasjid;
-
-import static android.location.LocationManager.GPS_PROVIDER;
-import static android.location.LocationManager.NETWORK_PROVIDER;
+package com.app.bersihmasjid.map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationProvider;
-import android.location.LocationRequest;
-import android.location.provider.ProviderProperties;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,23 +17,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.res.ResourcesCompat;
 
+import com.app.bersihmasjid.MainActivity;
+import com.app.bersihmasjid.MarkerClusterer;
+import com.app.bersihmasjid.R;
+import com.app.bersihmasjid.Splash;
+import com.app.bersihmasjid.StaticCluster;
 import com.app.bersihmasjid.databinding.ActivityMapBinding;
+import com.app.bersihmasjid.databinding.ActivityMapLoginBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
-import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -52,14 +41,12 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import org.osmdroid.views.overlay.mylocation.SimpleLocationOverlay;
 import org.osmdroid.views.overlay.Polygon;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * Bare bones osmdroid example
@@ -68,7 +55,7 @@ import java.util.Map;
  * @author Alex O'Ree
  */
 
-public class MapActivityNew extends AppCompatActivity implements LocationListener{
+public class MapActivityLog extends AppCompatActivity implements LocationListener{
     private MapView mapView = null;
     private final FloatingActionButton logOut = null;
     MainActivity mainActivity;
@@ -86,12 +73,12 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
 
     String Latdd;
     String Londd;
-    ActivityMapBinding binding;
+    ActivityMapLoginBinding binding;
     SharedPreferences.Editor editor;
     String imagepath;
 
-    RadiusMarkerClusterer radiusMarkerClusterer;
-    StaticCluster staticCluster;
+    //RadiusMarkerClusterer radiusMarkerClusterer;
+    //StaticCluster staticCluster;
     MarkerClusterer markerClusterer;
 
     Polygon polygon;
@@ -127,13 +114,12 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
         Latd = preferences.getString("Latd", "");
         Lond = preferences.getString("Lond", "");
         desc = preferences.getString("desc", "Mushala Pemuda KNPI Sumbar");
-        FirebaseApp.initializeApp(MapActivityNew.this);
+        FirebaseApp.initializeApp(MapActivityLog.this);
 
-        referenceui = FirebaseDatabase.getInstance().getReference().child("images");
         //referencepadang = FirebaseDatabase.getInstance().getReference().child("logopadang");
         //setContentView(R.layout.activity_map); - use bindings
         //mapView = findViewById(R.id.mapview); - use bindings
-        binding = ActivityMapBinding.inflate(getLayoutInflater());
+        binding = ActivityMapLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         mapView = binding.mapview;
@@ -142,7 +128,7 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
         getLocation();
 
 
-        radiusMarkerClusterer = new RadiusMarkerClusterer(MapActivityNew.this);
+        //radiusMarkerClusterer = new RadiusMarkerClusterer(MapActivityLog.this);
 
         markerClusterer = new MarkerClusterer() {
             @Override
@@ -161,6 +147,9 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
             }
         };
 
+        /* no need to load image for now
+
+        referenceui = FirebaseDatabase.getInstance().getReference().child("images");
 
         referenceui.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -181,10 +170,10 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
+*/
 
         IMapController mapController = this.mapView.getController();
-        SimpleLocationOverlay mMyLocationOverlay = new SimpleLocationOverlay(MapActivityNew.this);
+        SimpleLocationOverlay mMyLocationOverlay = new SimpleLocationOverlay(MapActivityLog.this);
         //this.mapView.getOverlays().add(mMyLocationOverlay);
 
         this.mScaleBarOverlay = new ScaleBarOverlay(mapView);
@@ -217,7 +206,7 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
         String url = "https://www.google.com/maps/search/?api=1&query=" + Latdd + "," + Londd;
 
 
-        GeoPoint uisumbarLocation = new GeoPoint(Double.parseDouble(Latdd), Double.parseDouble(Londd), 0);
+        GeoPoint apploc = new GeoPoint(Double.parseDouble(Latdd), Double.parseDouble(Londd), 0);
         GeoPoint home = new GeoPoint(-0.8917953507984866, 100.35467135562939, 0);
         GeoPoint test = new GeoPoint(-0.8917951843203211, 100.35512062059152, 0);
         GeoPoint myloc = new GeoPoint(latitude, longitude, 0);
@@ -227,8 +216,8 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
         //staticCluster = new StaticCluster(home);
 
 
-        mapController.setCenter(uisumbarLocation);
-       /* GpsMyLocationProvider provider = new GpsMyLocationProvider (MapActivityNew.this);
+        mapController.setCenter(apploc);
+       /* GpsMyLocationProvider provider = new GpsMyLocationProvider (MapActivityLog.this);
         provider.addLocationSource(NETWORK_PROVIDER);
         provider.getLocationSources();
         locationOverlay = new MyLocationNewOverlay(provider, mapView);
@@ -262,8 +251,8 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
 
 
         appMarker.setIcon(getResources().getDrawable(R.drawable.home));
-        appMarker.setTitle("Detail Lokasi: \n" + desc + "\n\n Titik GPS: \n" + uisumbarLocation);
-        appMarker.setPosition(uisumbarLocation);
+        appMarker.setTitle("Detail Lokasi: \n" + desc + "\n\n Titik GPS: \n" + apploc);
+        appMarker.setPosition(apploc);
         appMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
         //startMarker.setInfoWindow(infoWindow);
@@ -309,24 +298,29 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
 
 
         if (Math.abs(deHOME - deMyLoc) >= 51) {
-            Toast.makeText(MapActivityNew.this, "Anda belum berada di sekitar lokasi ",
+            Toast.makeText(MapActivityLog.this, "Anda belum berada di sekitar lokasi ",
                     Toast.LENGTH_LONG).show();
-            Toast.makeText(MapActivityNew.this, "Absensi Anda Masih Gagal",
+            Toast.makeText(MapActivityLog.this, "Absensi Anda Masih Gagal",
                     Toast.LENGTH_LONG).show();
         } else if (Math.abs(dnHOME - dnMyLoc) >= 51) {
-            Toast.makeText(MapActivityNew.this, "Anda belum berada di sekitar lokasi ",
+            Toast.makeText(MapActivityLog.this, "Anda belum berada di sekitar lokasi ",
                     Toast.LENGTH_LONG).show();
-            Toast.makeText(MapActivityNew.this, "Absensi Anda Masih Gagal",
+            Toast.makeText(MapActivityLog.this, "Absensi Anda Masih Gagal",
                     Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(MapActivityNew.this, "SELAMAT, Absensi Anda berhasil ",
+            Toast.makeText(MapActivityLog.this, "SELAMAT, Absensi Anda berhasil ",
                     Toast.LENGTH_LONG).show();
-            Toast.makeText(MapActivityNew.this, "Anda sudah berada di sekitar lokasi ",
+            Toast.makeText(MapActivityLog.this, "Anda sudah berada di sekitar lokasi ",
                     Toast.LENGTH_LONG).show();
 
         }
 
-
+        binding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MapActivityLog.this, Splash.class ));
+            }
+        });
         binding.maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -338,6 +332,7 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
         });
 
 
+
     }
 
 
@@ -346,8 +341,8 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
         super.onResume();
         Configuration.getInstance().load(getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
-        Configuration.getInstance().load(MapActivityNew.this,
-                PreferenceManager.getDefaultSharedPreferences(MapActivityNew.this));
+        Configuration.getInstance().load(MapActivityLog.this,
+                PreferenceManager.getDefaultSharedPreferences(MapActivityLog.this));
         //add
         //locationOverlay.enableMyLocation();
         if (mapView != null) {
@@ -482,7 +477,7 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
                 Log.e("TAG", "GPS is on");
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
-                /*Toast.makeText(MapActivityNew.this,
+                /*Toast.makeText(MapActivityLog.this,
                         "latitude:" + latitude + " longitude:" + longitude, Toast.LENGTH_SHORT).show();*/
                 searchNearestPlace(voice2text);
             } else {
@@ -518,7 +513,7 @@ public class MapActivityNew extends AppCompatActivity implements LocationListene
         //open the map:
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        Toast.makeText(MapActivityNew.this, "latitude:" + latitude + " longitude:" + longitude, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MapActivityLog.this, "latitude:" + latitude + " longitude:" + longitude, Toast.LENGTH_SHORT).show();
         searchNearestPlace(voice2text);
     }
 

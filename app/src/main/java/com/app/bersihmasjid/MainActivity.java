@@ -29,23 +29,23 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
 
         intentThatCalled = getIntent();
         voice2text = intentThatCalled.getStringExtra("v2txt");
         getLocation();
     }
 
-    public static boolean isLocationEnabled(Context context) {
+    public static boolean isLocationEnabled() {
         //...............
         return true;
     }
 
     protected void getLocation() {
-        if (isLocationEnabled(this)) {
+        if (isLocationEnabled()) {
             locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             criteria = new Criteria();
-            bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true)).toString();
+            bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
 
             //You can still do this if you like, you might get lucky:
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -80,11 +80,9 @@ public class MainActivity extends Activity
                 locationManager.requestLocationUpdates(bestProvider, 1000, 0, this);
             }
         }
-        else
-        {
-            //prompt user to enable location....
-            //.................
-        }
+        //prompt user to enable location....
+        //.................
+
     }
 
     @Override

@@ -2,14 +2,11 @@ package com.app.bersihmasjid;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,12 +16,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.bersihmasjid.dashboard.AddDiaryUser;
-import com.app.bersihmasjid.dashboard.Dashboard;
 import com.app.bersihmasjid.dashboard.UpdateDiary;
 import com.app.bersihmasjid.databinding.AdapterDiaryBinding;
 import com.app.bersihmasjid.databinding.DeleteDiaryBinding;
 import com.app.bersihmasjid.databinding.EditDiaryBinding;
+import com.app.bersihmasjid.map.MapActivity;
 import com.app.bersihmasjid.model.ModelDiary;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -120,7 +116,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 editor.putString("Lond",Lond);
                 editor.apply();
                 editor.commit();
-                context.startActivity(new Intent(context, MapActivityNew.class));
+                context.startActivity(new Intent(context, MapActivity.class));
 
             }
 

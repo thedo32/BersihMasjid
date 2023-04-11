@@ -48,11 +48,11 @@
         tools:ignore="DuplicateClickableBoundsCheck,DuplicateSpeakableTextCheck,VisualLintOverlap" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/login"
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Login Ke Lokasi"
-        android:text="Login Ke Lokasi"
+        android:contentDescription="Kembali ke Depan"
+        android:text="Kembali ke Depan"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

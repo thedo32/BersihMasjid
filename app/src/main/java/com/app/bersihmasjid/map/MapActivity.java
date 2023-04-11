@@ -1,4 +1,4 @@
-package com.app.bersihmasjid;
+package com.app.bersihmasjid.map;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,16 +10,11 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.app.bersihmasjid.R;
 import com.app.bersihmasjid.databinding.ActivityMapBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -45,7 +40,7 @@ public class MapActivity extends AppCompatActivity {
     private ScaleBarOverlay mScaleBarOverlay;
     ItemizedIconOverlay<OverlayItem> currentLocationOverlay;
     SharedPreferences preferences;
-    DatabaseReference referenceui;
+    //DatabaseReference referenceui;
     String unique;
     String uniqueauth;
     FirebaseAuth auth;
@@ -58,7 +53,7 @@ public class MapActivity extends AppCompatActivity {
     String Londd;
     ActivityMapBinding binding;
     SharedPreferences.Editor editor;
-    String imagepath;
+    //String imagepath;
 
 
 
@@ -72,8 +67,6 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstance);
         Configuration.getInstance().load(getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
-
-
         auth = FirebaseAuth.getInstance();
         uniqueauth = auth.getUid();
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
@@ -84,17 +77,31 @@ public class MapActivity extends AppCompatActivity {
         desc = preferences.getString("desc", "Mushala Pemuda KNPI Sumbar");
         FirebaseApp.initializeApp(MapActivity.this);
 
-        referenceui = FirebaseDatabase.getInstance().getReference().child("images");
-        //referencepadang = FirebaseDatabase.getInstance().getReference().child("logopadang");
-        //setContentView(R.layout.activity_map); - use bindings
-        //mapView = findViewById(R.id.mapview); - use bindings
+        //setContentView(R.layout.activity_map); - replace by bindings
+        //mapView = findViewById(R.id.mapview); - replace by bindings
         binding = ActivityMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         mapView = binding.mapview;
 
+        //send preferences to map login
+        editor.putString("unique",unique);
+
+        if (desc.length() >=60) {
+            editor.putString("desc", desc.substring(0, 60) + "...");
+        }else {
+            editor.putString("desc", desc);
+        }
+
+        editor.putString("Latd",Latd);
+        editor.putString("Lond",Lond);
+        editor.apply();
+        editor.commit();
 
 
+       /* no need to load image for now
+
+       referenceui = FirebaseDatabase.getInstance().getReference().child("images");
 
         referenceui.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -114,7 +121,7 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
+*/
 
         IMapController mapController = this.mapView.getController();
         SimpleLocationOverlay mMyLocationOverlay = new SimpleLocationOverlay(MapActivity.this);
@@ -146,12 +153,12 @@ public class MapActivity extends AppCompatActivity {
 
 
 
-       GeoPoint currentLocation = new GeoPoint( Double.parseDouble(Latdd) , Double.parseDouble(Londd), 0);
+       GeoPoint apploc = new GeoPoint( Double.parseDouble(Latdd) , Double.parseDouble(Londd), 0);
 
 
        startMarker.setIcon(getResources().getDrawable(R.drawable.home));
-       startMarker.setTitle("Detail Lokasi: \n"+desc+ "\n\n Titik GPS: \n" + currentLocation);
-       startMarker.setPosition(currentLocation);
+       startMarker.setTitle("Detail Lokasi: \n"+desc+ "\n\n Titik GPS: \n" + apploc);
+       startMarker.setPosition(apploc);
        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
        //startMarker.setInfoWindow(infoWindow);
@@ -160,10 +167,17 @@ public class MapActivity extends AppCompatActivity {
        mapView.setMultiTouchControls(true);
        mapView.getOverlays().add(startMarker);
        mapController.setZoom(18.5);
-       mapController.animateTo(currentLocation);
+       mapController.animateTo(apploc);
        mScaleBarOverlay.drawLatitudeScale(true);
        mScaleBarOverlay.drawLongitudeScale(true);
 
+
+        binding.login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MapActivity.this, MapActivityLog.class ));
+            }
+        });
 
         binding.maps.setOnClickListener(new View.OnClickListener() {
             @Override
