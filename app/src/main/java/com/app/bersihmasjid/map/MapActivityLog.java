@@ -216,10 +216,9 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
 
 
         GeoPoint apploc = new GeoPoint(Double.parseDouble(Latdd), Double.parseDouble(Londd), 0);
-        GeoPoint home = new GeoPoint(-0.8917953507984866, 100.35467135562939, 0);
-        GeoPoint test = new GeoPoint(-0.8917951843203211, 100.35512062059152, 0);
+      /*  GeoPoint home = new GeoPoint(-0.8917953507984866, 100.35467135562939, 0);
+        GeoPoint test = new GeoPoint(-0.8917951843203211, 100.35512062059152, 0);*/
         GeoPoint myloc = new GeoPoint(latitude, longitude, 0);
-        Log.d("TEEESSSST","TEST:"+latitude+","+longitude);
 
 
         //staticCluster = new StaticCluster(home);
@@ -241,16 +240,16 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         //mapController.animateTo(locationOverlay.getMyLocation());
 
 
-        homeMarker.setIcon(getResources().getDrawable(R.drawable.home));
+        /*homeMarker.setIcon(getResources().getDrawable(R.drawable.home));
         homeMarker.setTitle("Lokasi Rumah: \n Rumah" + "\n\n Titik GPS: \n" + home);
         homeMarker.setPosition(home);
         homeMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-
-        testMarker.setIcon(getResources().getDrawable(R.drawable.marker_kml_point));
+*/
+      /*  testMarker.setIcon(getResources().getDrawable(R.drawable.marker_kml_point));
         testMarker.setTitle(" Detail Lokasi: " +
                 "\n Batas - Radius 50 Meter dari Rumah" + "\n\n Titik GPS: \n" + test);
         testMarker.setPosition(test);
-        testMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        testMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);*/
 
         mylocMarker.setIcon(getResources().getDrawable(R.drawable.name));
         mylocMarker.setTitle(" Detail Lokasi: " +
@@ -271,8 +270,8 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         mapView.setMultiTouchControls(true);
         mapView.getOverlays().add(appMarker);
         mapView.getOverlays().add(homeMarker);
-        mapView.getOverlays().add(mylocMarker);
-        mapView.getOverlays().add(testMarker);
+       /* mapView.getOverlays().add(mylocMarker);
+        mapView.getOverlays().add(testMarker);*/
         mapView.getOverlayManager().add(locationOverlay);
         mapController.setZoom(18.5);
         mapController.setCenter(apploc);
@@ -286,7 +285,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         //radiusMarkerClusterer.setMaxClusteringZoomLevel(5);
         //radiusMarkerClusterer.setRadius(10);
 
-        Polygon hPolygon = new Polygon();
+      /*  Polygon hPolygon = new Polygon();
         final double hradius = 50;
         ArrayList<GeoPoint> hcirclePoints = new ArrayList<GeoPoint>();
         for (float f = 0; f < 360; f += 1) {
@@ -294,7 +293,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
                     .destinationPoint(hradius, f));
         }
         hPolygon.setPoints(hcirclePoints);
-        mapView.getOverlays().add(hPolygon);
+        mapView.getOverlays().add(hPolygon);*/
 
         Polygon oPolygon = new Polygon();
         final double oradius = 50;
@@ -303,7 +302,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
             ocirclePoints.add(new GeoPoint(Double.parseDouble(Latdd), Double.parseDouble(Londd))
                     .destinationPoint(oradius, f));
         }
-        hPolygon.setPoints(ocirclePoints);
+        oPolygon.setPoints(ocirclePoints);
         mapView.getOverlays().add(oPolygon);
 
        // Deg2UTM deg2UTMHome = new Deg2UTM(home.getLatitude(), home.getLongitude());
