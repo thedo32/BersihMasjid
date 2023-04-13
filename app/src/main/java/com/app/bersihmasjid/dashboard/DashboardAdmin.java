@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,7 +37,6 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
 
     AdapterDiaryBinding adapterDiaryBinding;
     ArrayList<ModelDiary> diaries;
-    DatabaseReference reference;
     DatabaseReference referenceall;
 
     SharedPreferences preferences;
@@ -49,6 +47,7 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
     ProgressDialog dialog;
     String unique;
     String uniqueId;
+    String uniqueauth;
 
 
 
@@ -60,6 +59,7 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
         View view = binding.getRoot();
         setContentView(view);
         auth = FirebaseAuth.getInstance();
+        uniqueauth = auth.getUid();
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         unique = preferences.getString("unique","");
         referenceall = FirebaseDatabase.getInstance().getReference("DataDiary").child("data");
@@ -151,7 +151,7 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
     public void UpdateDiary(ModelDiary diary) {
         uniqueId = preferences.getString("",diary.getUserid());
 
-        referenceall.child(unique).child(uniqueId).setValue(diary).addOnCompleteListener(new OnCompleteListener<Void>() {
+        referenceall.child(uniqueauth).child(uniqueId).setValue(diary).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -173,7 +173,7 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
     @Override
     public void DeleteDiary(ModelDiary diary) {
         uniqueId = preferences.getString("",diary.getUserid());
-        referenceall.child(unique).child(uniqueId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+        referenceall.child(uniqueauth).child(uniqueId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

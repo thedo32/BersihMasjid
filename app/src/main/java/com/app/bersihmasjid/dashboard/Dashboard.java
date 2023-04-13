@@ -72,7 +72,7 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
 
         referenceusr = FirebaseDatabase.getInstance().getReference( "UserDiary");
         referenceadmin = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(admin);
-        reference = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(unique);
+        reference = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(uniqueauth);
         diaries = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(Dashboard.this);
         dialog = new ProgressDialog( Dashboard.this);

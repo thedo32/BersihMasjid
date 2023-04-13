@@ -84,7 +84,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
 
     //RadiusMarkerClusterer radiusMarkerClusterer;
     //StaticCluster staticCluster;
-    MarkerClusterer markerClusterer;
+    //MarkerClusterer markerClusterer;
 
     Polygon polygon;
 

@@ -54,7 +54,7 @@ public class RadiusMarkerClusterer extends MarkerClusterer {
         mTextPaint.setFakeBoldText(true);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setAntiAlias(true);
-        Drawable clusterIconD = ctx.getResources().getDrawable(R.drawable.marker_poi_cluster);
+        Drawable clusterIconD = ctx.getResources().getDrawable(org.osmdroid.library.R.drawable.marker_default);
         Bitmap clusterIcon = ((BitmapDrawable) clusterIconD).getBitmap();
         setIcon(clusterIcon);
         mAnimated = true;
