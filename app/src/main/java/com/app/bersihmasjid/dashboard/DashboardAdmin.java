@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -149,7 +150,8 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
     @Override
     public void UpdateDiary(ModelDiary diary) {
         uniqueId = preferences.getString("",diary.getUserid());
-        reference.child(uniqueId).setValue(diary).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+        referenceall.child(unique).child(uniqueId).setValue(diary).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -171,7 +173,7 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
     @Override
     public void DeleteDiary(ModelDiary diary) {
         uniqueId = preferences.getString("",diary.getUserid());
-        reference.child(uniqueId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+        referenceall.child(unique).child(uniqueId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

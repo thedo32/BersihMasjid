@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Canvas;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,13 +20,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.app.bersihmasjid.AdapterUser;
 import com.app.bersihmasjid.MainActivity;
 import com.app.bersihmasjid.MarkerClusterer;
 import com.app.bersihmasjid.R;
-import com.app.bersihmasjid.Splash;
-import com.app.bersihmasjid.StaticCluster;
-import com.app.bersihmasjid.databinding.ActivityMapBinding;
 import com.app.bersihmasjid.databinding.ActivityMapLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +37,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.MapTileProviderBase;
+import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -49,12 +46,12 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import org.osmdroid.views.overlay.mylocation.SimpleLocationOverlay;
 import org.osmdroid.views.overlay.Polygon;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
 
 /**
  * Bare bones osmdroid example
@@ -91,7 +88,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
 
     Polygon polygon;
 
-    MyLocationNewOverlay locationOverlay;
+   // MyLocationNewOverlay locationOverlay;
 
     Intent intentThatCalled;
     public double latitude;
@@ -134,12 +131,11 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         mapView = binding.mapview;
         intentThatCalled = getIntent();
         voice2text = intentThatCalled.getStringExtra("v2txt");
-        getLocation();
-
+        getLocation(); //to get last known location
 
         //radiusMarkerClusterer = new RadiusMarkerClusterer(MapActivityLog.this);
 
-        markerClusterer = new MarkerClusterer() {
+ /*       markerClusterer = new MarkerClusterer() {
             @Override
             public ArrayList<StaticCluster> clusterer(MapView mapView) {
                 return null;
@@ -154,7 +150,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
             public void renderer(ArrayList<StaticCluster> clusters, Canvas canvas, MapView mapView) {
 
             }
-        };
+        };*/
 
         /* no need to load image for now
 
@@ -225,7 +221,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
 
 
 
-       /* GpsMyLocationProvider provider = new GpsMyLocationProvider (MapActivityLog.this);
+       /* GpsMyLocationProvider provider = new GpsMyLocationProvider(MapActivityLog.this);
         provider.addLocationSource(NETWORK_PROVIDER);
         provider.getLocationSources();
         locationOverlay = new MyLocationNewOverlay(provider, mapView);
@@ -269,10 +265,10 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
         mapView.getOverlays().add(appMarker);
-        mapView.getOverlays().add(homeMarker);
-       /* mapView.getOverlays().add(mylocMarker);
+        mapView.getOverlays().add(mylocMarker);
+        /* mapView.getOverlays().add(homeMarker);
         mapView.getOverlays().add(testMarker);*/
-        mapView.getOverlayManager().add(locationOverlay);
+        //mapView.getOverlayManager().add(locationOverlay);
         mapController.setZoom(18.5);
         mapController.setCenter(apploc);
         mapController.animateTo(myloc);
@@ -371,6 +367,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MapActivityLog.this, MapActivity.class ));
+                finish();
             }
         });
         binding.maps.setOnClickListener(new View.OnClickListener() {
@@ -542,6 +539,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
+
                     return;
                 }
                 locationManager.requestLocationUpdates(bestProvider, 1000, 0, this);
@@ -565,6 +563,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         //open the map:
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+        Toast.makeText(MapActivityLog.this,"LOKASI ANDA SUDAH DIKENALI" , Toast.LENGTH_SHORT).show();
         Toast.makeText(MapActivityLog.this, "latitude:" + latitude + " longitude:" + longitude, Toast.LENGTH_SHORT).show();
         searchNearestPlace(voice2text);
     }

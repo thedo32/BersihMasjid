@@ -48,8 +48,7 @@
             android:spinnerMode="dropdown"
             android:textColorHint="@color/black"
             android:textCursorDrawable="@color/black"
-            tools:ignore="VisualLintTextFieldSize,SpeakableTextPresentCheck"
-            tools:listheader="Nama" />
+            tools:ignore="VisualLintTextFieldSize,SpeakableTextPresentCheck" />
 
         <EditText
             android:id="@+id/point"
@@ -78,6 +77,7 @@
             android:background="@drawable/custom_text_white"
             android:cursorVisible="true"
             android:drawablePadding="5dp"
+            android:enabled="false"
             android:hint="0"
             android:importantForAutofill="no"
             android:inputType="number"

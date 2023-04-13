@@ -151,6 +151,18 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
 
             }
         });
+        holder.binding.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int intdesc;
+                intdesc = holder.binding.description.getVisibility();
+                if (intdesc== 0x00000008){
+                    holder.binding.description.setVisibility(View.VISIBLE);
+                }else{
+                    holder.binding.description.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
 
@@ -309,6 +321,8 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 },360);
             }
         });
+
+
 
     }
 }

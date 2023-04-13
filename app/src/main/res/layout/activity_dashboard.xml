@@ -32,13 +32,13 @@
         android:textSize="18sp"
         android:textStyle="italic"
         tools:ignore="VisualLintOverlap" />
+
     <TextView
         android:id="@+id/user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="false"
         android:layout_marginTop="140dp"
-        android:text="@string/username"
         android:textAlignment="center"
         android:textColor="@color/purple_500"
         android:textSize="5sp"
@@ -50,7 +50,7 @@
         android:layout_alignTop="@id/user"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/custom_text_white">
+        android:background="@drawable/custom_text_white_m">
 
         <TextView
             android:id="@+id/point"
@@ -59,6 +59,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginLeft="145dp"
+            android:layout_marginRight="145dp"
+            android:background="@drawable/custom_bgthree_s"
             android:drawableTop="@drawable/poinpoin"
             android:drawablePadding="5dp"
             android:text="0"
@@ -67,15 +70,34 @@
             android:textSize="16sp"
             android:textStyle="normal|bold"
             tools:ignore="VisualLintOverlap" />
-    </RelativeLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_diary"
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/started"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="220dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="65dp"
+            android:includeFontPadding="true"
+            android:minHeight="20dp"
+            android:text="Silahkan Tekan Icon Senyum Untuk Mulai"
+            android:textAlignment="center"
+            android:textColor="@color/purple_700"
+            android:textSize="14sp"
+            android:textStyle="normal|bold"
+            tools:ignore="VisualLintOverlap" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_diary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

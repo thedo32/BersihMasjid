@@ -1,127 +1,73 @@
 package com.app.bersihmasjid;
 
-import android.app.Activity;
-import android.content.Context;
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+/*import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;*/
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-public class MainActivity extends Activity
-        implements LocationListener {
+import com.app.bersihmasjid.databinding.ActivityMainBinding;
+import com.app.bersihmasjid.databinding.ActivitySigninBinding;
+import com.app.bersihmasjid.databinding.ActivitySplashBinding;
 
-    Intent intentThatCalled;
-    public double latitude;
-    public double longitude;
-    public LocationManager locationManager;
-    public Criteria criteria;
-    public String bestProvider;
+public class MainActivity extends AppCompatActivity {
 
-    String voice2text; //added
+    ActivityMainBinding binding;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-
-        intentThatCalled = getIntent();
-        voice2text = intentThatCalled.getStringExtra("v2txt");
-        getLocation();
-    }
-
-    public static boolean isLocationEnabled() {
-        //...............
-        return true;
-    }
-
-    protected void getLocation() {
-        if (isLocationEnabled()) {
-            locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-            criteria = new Criteria();
-            bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
-
-            //You can still do this if you like, you might get lucky:
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
+        binding.start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SignInActivity.class));
             }
-            Location location = locationManager.getLastKnownLocation(bestProvider);
-            if (location != null) {
-                Log.e("TAG", "GPS is on");
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-                Toast.makeText(MainActivity.this, "latitude:" + latitude + " longitude:" + longitude, Toast.LENGTH_SHORT).show();
-                searchNearestPlace(voice2text);
-            } else {
-                //This is what you need:
-                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                locationManager.requestLocationUpdates(bestProvider, 1000, 0, this);
+        });
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)){
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }else{
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         }
-        //prompt user to enable location....
-        //.................
-
     }
-
+    @SuppressLint("MissingSuperCall")
     @Override
-    protected void onPause() {
-        super.onPause();
-        locationManager.removeUpdates(this);
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        //Hey, a non null location! Sweet!
-
-        //remove location callback:
-        locationManager.removeUpdates(this);
-
-        //open the map:
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        Toast.makeText(MainActivity.this, "latitude:" + latitude + " longitude:" + longitude, Toast.LENGTH_SHORT).show();
-        searchNearestPlace(voice2text);
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    public void searchNearestPlace(String v2txt) {
-        //.....
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(MainActivity.this,
+                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
     }
 }

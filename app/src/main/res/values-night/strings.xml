@@ -38,7 +38,7 @@
     <string name="username">username</string>
     <string name="lupa_password">LUPA PASSWORD</string>
     <string name="titik_lokasi">Titik Lokasi</string>
-    <string name="tambah_konten_user">TAMBAH KONTEN - USER</string>
+    <string name="tambah_konten_user">TAMBAH KONTEN</string>
     <string name="tambah_konten_admin">TAMBAH KONTEN - ADM</string>
     <string name="administrator_dashboard">Administrator Dashboard</string>
     <string name="administrasi_user">Administrasi User</string>

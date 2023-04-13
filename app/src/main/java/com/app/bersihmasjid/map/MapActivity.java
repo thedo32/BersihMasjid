@@ -1,14 +1,17 @@
 package com.app.bersihmasjid.map;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.app.bersihmasjid.R;
 import com.app.bersihmasjid.databinding.ActivityMapBinding;
@@ -188,11 +191,7 @@ public class MapActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
     }
-
-
 
    @Override
     public void onResume() {
@@ -213,5 +212,4 @@ public class MapActivity extends AppCompatActivity {
             mapView.onPause();
         }
     }
-
 }

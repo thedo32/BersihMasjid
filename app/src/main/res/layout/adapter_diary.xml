@@ -1,47 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="10dp"
-        app:cardPreventCornerOverlap="true"
-        android:layout_margin="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:cardPreventCornerOverlap="true">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:padding="8dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_text_white_m"
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/title"
-                android:background="@drawable/custom_bgone_s"
-                android:text="@string/title"
-                android:inputType="textCapCharacters"
-                android:textColor="@color/black"
-                android:layout_marginBottom="5dp"
-                android:textSize="21sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/custom_bgone_s"
+                android:clickable="true"
+                android:inputType="textCapCharacters"
+                android:minHeight="48dp"
+                android:text="@string/title"
+                android:textColor="@color/black"
+                android:textSize="21sp"
+                app:drawableEndCompat="@drawable/emoticon"
+                tools:ignore="TextViewEdits" />
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:background="@drawable/custom_text_white"
                 android:minHeight="48dp"
                 android:text="@string/description"
-                android:background="@drawable/custom_text_white"
                 android:textColor="@color/black"
                 android:textIsSelectable="true"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -49,44 +55,43 @@
 
                 <TextView
                     android:id="@+id/update"
-                    android:text="ADMIN Update:"
-                    android:background="@drawable/custom_bgthree_s"
-                    android:textColor="@color/black"
-                    android:textSize="10sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:ignore="RelativeOverlap,SmallSp" />
+                    android:background="@drawable/custom_bgthree_s"
+                    android:text="ADMIN Update:"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    tools:ignore="HardcodedText,RelativeOverlap,SmallSp" />
 
                 <TextView
                     android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="95dp"
                     android:text="@string/_12_januari_2025"
                     android:textColor="@color/black"
                     android:textSize="10sp"
-                    android:layout_marginLeft="95dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:ignore="RelativeOverlap,SmallSp" />
+                    tools:ignore="RelativeOverlap,RtlHardcoded,SmallSp" />
 
 
                 <ImageView
                     android:id="@+id/maps"
-                    android:src="@drawable/maps"
-                    android:layout_alignParentEnd="true"
-                    android:paddingEnd="100dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:ignore="RtlSymmetry"
-                    android:contentDescription="@string/map_dashboard" />
+                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@string/map_dashboard"
+                    android:paddingEnd="95dp"
+                    android:src="@drawable/maps"
+                    tools:ignore="RtlSymmetry" />
 
                 <ImageView
                     android:id="@+id/delete"
-                    android:src="@drawable/close"
-                    android:layout_alignParentEnd="true"
-                    android:paddingEnd="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:ignore="RtlSymmetry"
-                    android:contentDescription="@string/delete_diary" />
+                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@string/delete_diary"
+                    android:src="@drawable/close"
+                    tools:ignore="RtlSymmetry" />
 
                 <ImageView
                     android:id="@+id/edit"
