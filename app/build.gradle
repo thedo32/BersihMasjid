@@ -19,6 +19,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -43,7 +44,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation platform('com.google.firebase:firebase-bom:31.2.3')
+    implementation platform('com.google.firebase:firebase-bom:31.4.0')
     // Add the dependency for the Firebase Authentication library
     implementation 'com.google.firebase:firebase-auth'
     // Add the dependency for the Firebase Analytics
@@ -66,9 +67,9 @@ dependencies {
     //implementation files('https://github.com/grote/OSMBonusPack')
     //implementation files("com.github.MKergall:osmbonuspack:6.9.0")
     implementation fileTree(dir: 'libs', include: ['osmbonuspack_6.9.0.aar'])
-    implementation 'org.apache.commons:commons-lang3:3.8.1'
-    implementation 'com.google.code.gson:gson:2.8.9'
-    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
 
     // Add this in addition to your other dependencies
     implementation "androidx.activity:activity:1.6.0-alpha05"

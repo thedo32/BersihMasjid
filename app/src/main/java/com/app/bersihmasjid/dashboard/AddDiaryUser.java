@@ -41,7 +41,7 @@ public class AddDiaryUser extends AppCompatActivity {
         setContentView(view);
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         uniqueId = preferences.getString("unique", "");
-        reference = FirebaseDatabase.getInstance().getReference("DataDiary").child("data").child(uniqueId);
+        reference = FirebaseDatabase.getInstance().getReference("DataDiary").child(uniqueId);
 
         dialog = new ProgressDialog( AddDiaryUser.this);
 

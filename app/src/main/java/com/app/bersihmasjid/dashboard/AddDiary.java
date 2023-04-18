@@ -41,7 +41,7 @@ public class AddDiary extends AppCompatActivity {
         setContentView(view);
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         uniqueId = preferences.getString("unique", "");
-        reference = FirebaseDatabase.getInstance().getReference("DataDiary").child("data").child(uniqueId);
+        reference = FirebaseDatabase.getInstance().getReference("DataDiary").child(uniqueId);
 
         dialog = new ProgressDialog( AddDiary.this);
 
@@ -70,13 +70,13 @@ public class AddDiary extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(AddDiary.this, "Diary Added",
+                            Toast.makeText(AddDiary.this, "Konten Ditambahkan",
                                     Toast.LENGTH_SHORT).show();
 
                             startActivity(new Intent(AddDiary.this, DashboardAdmin.class));
                            finish();
                         }else {
-                            Toast.makeText(AddDiary.this, "Fail to Added",
+                            Toast.makeText(AddDiary.this, "Gagal Ditambahkan",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

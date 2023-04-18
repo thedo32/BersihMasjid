@@ -71,8 +71,8 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
         admin = "XDb6D7GO3zYOlTYkVbWI0aLvXKD2";
 
         referenceusr = FirebaseDatabase.getInstance().getReference( "UserDiary");
-        referenceadmin = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(admin);
-        reference = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(uniqueauth);
+        referenceadmin = FirebaseDatabase.getInstance().getReference( "DataDiary").child(admin);
+        reference = FirebaseDatabase.getInstance().getReference( "DataDiary").child(uniqueauth);
         diaries = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(Dashboard.this);
         dialog = new ProgressDialog( Dashboard.this);
@@ -107,7 +107,7 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
         diaries.clear(); //bersihkan dahulu data diary biar tidak bertumpuk
 
         //get name for dashboard
-        referenceusr.child("user").child(unique).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        referenceusr.child(unique).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -119,7 +119,7 @@ public class Dashboard extends AppCompatActivity implements UpdateDiary {
             }
         });
 
-        referenceusr.child("user").child(unique).child("point").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        referenceusr.child(unique).child("point").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {

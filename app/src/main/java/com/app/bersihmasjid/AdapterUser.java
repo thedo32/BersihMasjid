@@ -4,7 +4,9 @@ import static android.R.layout.simple_spinner_dropdown_item;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,12 +52,13 @@ public class AdapterUser extends AppCompatActivity {
     String addpoint="0";
     String account;
     String description;
+    String url;
 
   /*  String[] namess = {
             "Karin",
             "Ingrid", "Helga",
             "Renate",
-            "Elke",
+            "Novi",
             "Ursula",
             "Erika",
             "Christa",
@@ -81,13 +84,16 @@ public class AdapterUser extends AppCompatActivity {
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         editor = preferences.edit();
         unique = preferences.getString("unique", "");
-        //reference = FirebaseDatabase.getInstance().getReference("UserDiary").child("user").child(uniqueId);
-        referenceall = FirebaseDatabase.getInstance().getReference("UserDiary").child("user");
+        //reference = FirebaseDatabase.getInstance().getReference("UserDiary").child(uniqueId);
+        referenceall = FirebaseDatabase.getInstance().getReference("UserDiary");
         //ArrayAdapter<String> adapter = new ArrayAdapter<>(AdapterUser.this,simple_spinner_dropdown_item, namess);
         dialog = new ProgressDialog( AdapterUser.this);
+        url = "https://uisumbar.xyztem.xyz/2023/04/18/bersih-masjid-user-admin/";
 
+        //tambahkan nama di spinner
         reloadname();
 
+        //tambahkan nilai di textboxes
         binding.name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -273,6 +279,16 @@ public class AdapterUser extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        binding.web.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
 

@@ -199,7 +199,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
             editBinding.lon.setVisibility(View.GONE);
         }
 
-        referencedata = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(uniqueauth);
+        referencedata = FirebaseDatabase.getInstance().getReference( "DataDiary").child(uniqueauth);
 
         referencedata.addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
 
@@ -267,7 +267,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         deleteBinding.title.setText(mdelete.getTitle());
         deleteBinding.description.setText(mdelete.getDescription());
         keyId = mdelete.getUserid();
-        referencedata = FirebaseDatabase.getInstance().getReference( "DataDiary").child("data").child(uniqueauth);
+        referencedata = FirebaseDatabase.getInstance().getReference( "DataDiary").child(uniqueauth);
 
         referencedata.addListenerForSingleValueEvent(new ValueEventListener() {  //ambil data dari firebase
 

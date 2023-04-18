@@ -176,7 +176,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="30dp"
             android:layout_marginBottom="8dp"
             android:layout_toEndOf="@id/email"
             android:contentDescription="@string/submit_edit"
@@ -190,11 +190,22 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="36dp"
+            android:layout_marginEnd="30dp"
             android:contentDescription="@string/submit_edit"
             android:enabled="true"
             android:src="@drawable/close"
             android:text="HAPUS"
+            app:rippleColor="@color/teal_200"
+            tools:ignore="ImageContrastCheck" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/web"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="uisumbar web"
+            android:src="@drawable/homepage"
             app:rippleColor="@color/teal_200"
             tools:ignore="ImageContrastCheck" />
 

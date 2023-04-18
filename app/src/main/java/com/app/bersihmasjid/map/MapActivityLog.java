@@ -121,7 +121,7 @@ public class MapActivityLog extends AppCompatActivity implements LocationListene
         desc = preferences.getString("desc", "Mushala Pemuda KNPI Sumbar");
         FirebaseApp.initializeApp(MapActivityLog.this);
 
-        reference = FirebaseDatabase.getInstance().getReference("UserDiary").child("user")
+        reference = FirebaseDatabase.getInstance().getReference("UserDiary")
                 .child(uniqueauth);
         //setContentView(R.layout.activity_map); - use bindings
         //mapView = findViewById(R.id.mapview); - use bindings

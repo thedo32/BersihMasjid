@@ -42,12 +42,12 @@ public class Forgot extends AppCompatActivity {
    public void onComplete(@NonNull Task<Void> task) {
     if (task.isSuccessful()){
 
-     Toast.makeText(Forgot.this, "Reset Email Sent",
+     Toast.makeText(Forgot.this, "Email Untuk Reset Sudah Terkirim",
              Toast.LENGTH_SHORT).show();
 
      finish();
     }else{
-     Toast.makeText(Forgot.this, "Unsent, Unknown Address",
+     Toast.makeText(Forgot.this, "Tidak Terkirim, Alamat Email Tidak Dikenal",
              Toast.LENGTH_SHORT).show();
     }
    }

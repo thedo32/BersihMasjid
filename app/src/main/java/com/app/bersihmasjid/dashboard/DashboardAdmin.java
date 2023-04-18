@@ -62,7 +62,7 @@ public class DashboardAdmin extends AppCompatActivity implements UpdateDiary {
         uniqueauth = auth.getUid();
         preferences = getSharedPreferences( "uisumbar",MODE_PRIVATE);
         unique = preferences.getString("unique","");
-        referenceall = FirebaseDatabase.getInstance().getReference("DataDiary").child("data");
+        referenceall = FirebaseDatabase.getInstance().getReference("DataDiary");
         diaries = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(DashboardAdmin.this);
         dialog = new ProgressDialog( DashboardAdmin.this);
