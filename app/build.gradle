@@ -66,10 +66,10 @@ dependencies {
     //implementation 'com.github.MKergall:osmbonuspack:6.9.0'
     //implementation files('https://github.com/grote/OSMBonusPack')
     //implementation files("com.github.MKergall:osmbonuspack:6.9.0")
-    implementation fileTree(dir: 'libs', include: ['osmbonuspack_6.9.0.aar'])
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    //implementation fileTree(dir: 'libs', include: ['osmbonuspack_6.9.0.aar'])
+    //implementation 'org.apache.commons:commons-lang3:3.12.0'
+    //implementation 'com.google.code.gson:gson:2.10.1'
+    //implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
 
     // Add this in addition to your other dependencies
     implementation "androidx.activity:activity:1.6.0-alpha05"
