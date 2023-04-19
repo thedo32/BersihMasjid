@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +40,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
     Context context;
     ArrayList<ModelDiary> arrayList;
     AdapterDiaryBinding binding;
+
 
     FirebaseAuth auth;
 
@@ -55,6 +57,7 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
     String uniques;
 
     String keys;
+
 
 
     public AdapterDiary(Context context, ArrayList<ModelDiary> arrayList){
@@ -83,8 +86,6 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         uniques = preferences.getString("unique", "");
 
 
-
-
         String title = modelDiary.getTitle();
         String description = modelDiary.getDescription();
         String date = modelDiary.getDate();
@@ -97,6 +98,46 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         holder.binding.description.setText(description);
         holder.binding.date.setText(date);
         holder.binding.update.setText(update);
+
+        holder.binding.calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendarEvent = Calendar.getInstance();
+                String Latd = modelDiary.getLat();
+                String Lond = modelDiary.getLon();
+                String Desc = modelDiary.getDescription();
+                String tmStart;
+                String tmEnd;
+                long start;
+                long end;
+                tmStart =  modelDiary.getStarttm();
+                tmEnd = modelDiary.getEndtm();
+
+                if (tmStart.equals("")) {
+                    start = calendarEvent.getTimeInMillis();
+                }else{
+                    start = Time.parse(tmStart);
+                }
+
+                if (tmEnd.equals("")) {
+                    end = calendarEvent.getTimeInMillis() + (60 * 60 * 1000);
+                }else{
+                    end = Time.parse(tmEnd);
+                }
+
+
+                Intent i = new Intent(Intent.ACTION_EDIT);
+                i.setType("vnd.android.cursor.item/event");
+                i.putExtra("beginTime", start);
+                i.putExtra("allDay", false);
+                i.putExtra("rule", "FREQ=YEARLY");
+                i.putExtra("endTime", end);
+                i.putExtra("description", Desc);
+                i.putExtra("title", holder.binding.title.getText().toString());
+                i.putExtra("eventLocation", Latd +","+Lond );
+                context.startActivity(i);
+            }
+        });
 
 
 
@@ -158,8 +199,10 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 intdesc = holder.binding.description.getVisibility();
                 if (intdesc== 0x00000008){
                     holder.binding.description.setVisibility(View.VISIBLE);
+                    holder.binding.calendar.setVisibility(View.VISIBLE);
                 }else{
                     holder.binding.description.setVisibility(View.GONE);
+                    holder.binding.calendar.setVisibility(View.GONE);
                 }
             }
         });
@@ -192,11 +235,15 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
         editBinding.description.setText(md.getDescription());
         editBinding.lat.setText(md.getLat());
         editBinding.lon.setText(md.getLon());
+        editBinding.tmstart.setText(md.getStarttm());
+        editBinding.tmend.setText(md.getEndtm());
         keyId = md.getUserid();
 
         if (!uniqueauth.equals("XDb6D7GO3zYOlTYkVbWI0aLvXKD2")) {
             editBinding.lat.setVisibility(View.GONE);
             editBinding.lon.setVisibility(View.GONE);
+            editBinding.tmend.setVisibility(View.GONE);
+            editBinding.tmstart.setVisibility(View.GONE);
         }
 
         referencedata = FirebaseDatabase.getInstance().getReference( "DataDiary").child(uniqueauth);
@@ -233,13 +280,16 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 String description = editBinding.description.getText().toString();
                 String lat = editBinding.lat.getText().toString();
                 String lon = editBinding.lon.getText().toString();
+                String starttm = editBinding.tmstart.getText().toString();
+                String endtm = editBinding.tmend.getText().toString();
                 String updater = "ADMIN Update:";
 
                 if (!uniqueauth.equals("XDb6D7GO3zYOlTYkVbWI0aLvXKD2")) {
                     updater = "Update Tgl:";
                 }
 
-                ModelDiary mdEdit = new ModelDiary(title, description, date, keyId,lat,lon,updater);
+                ModelDiary mdEdit = new ModelDiary(title, description, date, keyId,
+                        lat,lon,starttm, endtm, updater);
                 diary.UpdateDiary(mdEdit);
 
 
@@ -300,13 +350,16 @@ public class AdapterDiary extends RecyclerView.Adapter<AdapterDiary.AdapterHolde
                 String description = deleteBinding.description.getText().toString();
                 String lat = "-0.891741";
                 String lon = "100.354692";
+                String starttm = "";
+                String endtm = "";
                 String updater = "ADMIN Update:";
 
                 if (!uniqueauth.equals("XDb6D7GO3zYOlTYkVbWI0aLvXKD2")) {
                     updater = "Update Tgl:";
                 }
 
-                ModelDiary mDel = new ModelDiary(title, description, date, keyId,lat,lon,updater);
+                ModelDiary mDel = new ModelDiary(title, description, date, keyId,
+                        lat,lon,starttm, endtm, updater);
                 diary.DeleteDiary(mDel);
 
 

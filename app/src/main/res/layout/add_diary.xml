@@ -22,6 +22,42 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/tmstart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="345dp"
+            android:layout_marginRight="5dp"
+            android:autofillHints="0.000"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:hint="Waktu Mulai"
+            android:inputType="datetime"
+            android:minHeight="48dp"
+            android:textColorHint="@color/black"
+            android:textCursorDrawable="@color/black"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <EditText
+            android:id="@+id/tmend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="410dp"
+            android:layout_marginRight="5dp"
+            android:autofillHints="0.000"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:hint="Waktu Selesai"
+            android:inputType="datetime"
+            android:minHeight="48dp"
+            android:textColorHint="@color/black"
+            android:textCursorDrawable="@color/black"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <EditText
             android:id="@+id/title"
             android:hint="Judul Konten"
             android:cursorVisible="true"
@@ -41,38 +77,38 @@
 
         <EditText
             android:id="@+id/description"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@color/black"
-            android:hint="@string/description_hint"
-            android:drawablePadding="10dp"
-            android:layout_marginTop="120dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_width="match_parent"
-            android:inputType="textEmailAddress|textMultiLine"
-            android:maxLines="10"
-            android:minLines="10"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_text_white"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginRight="5dp"
             android:autofillHints="Description Multiline"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:hint="@string/description_hint"
+            android:inputType="textEmailAddress|textMultiLine"
+            android:maxLines="6"
+            android:minLines="6"
+            android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize" />
         <!--android:drawableLeft="@drawable/password" > -->
 
         <EditText
             android:id="@+id/lat"
-            android:hint="@string/titik_lokasi"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@color/black"
-            android:drawablePadding="10dp"
-            android:layout_marginTop="500dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:textColorHint="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:background="@drawable/custom_text_white"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="500dp"
+            android:layout_marginRight="5dp"
             android:autofillHints="0.000"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:hint="@string/titik_lokasi"
+            android:minHeight="48dp"
+            android:textColorHint="@color/black"
+            android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize" />
 
         <EditText

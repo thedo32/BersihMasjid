@@ -47,7 +47,22 @@
                 android:textColor="@color/black"
                 android:textIsSelectable="true"
                 android:textSize="15sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/calendar"
+                android:text="Tambah Ke Kalender"
+                android:textSize="12sp"
+                android:background="@drawable/custom_button"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/teal_200"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="VisualLintButtonSize"
+                android:visibility="gone"/>
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"

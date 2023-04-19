@@ -23,6 +23,42 @@
         android:layout_centerInParent="true">
 
         <EditText
+            android:id="@+id/tmstart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="345dp"
+            android:layout_marginRight="5dp"
+            android:autofillHints="0.000"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:hint="Waktu Mulai"
+            android:inputType="datetime"
+            android:minHeight="48dp"
+            android:textColorHint="@color/black"
+            android:textCursorDrawable="@color/black"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <EditText
+            android:id="@+id/tmend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="410dp"
+            android:layout_marginRight="5dp"
+            android:autofillHints="0.000"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:hint="Waktu Selesai"
+            android:inputType="datetime"
+            android:minHeight="48dp"
+            android:textColorHint="@color/black"
+            android:textCursorDrawable="@color/black"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <EditText
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,8 +89,8 @@
             android:hint="@string/description_hint"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress|textMultiLine"
-            android:maxLines="10"
-            android:minLines="10"
+            android:maxLines="6"
+            android:minLines="6"
             android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize" />
         <!--android:drawableLeft="@drawable/password" > -->

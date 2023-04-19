@@ -54,6 +54,8 @@ public class AddDiaryUser extends AppCompatActivity {
                 String description = binding.description.getText().toString();
                 String lat = "";
                 String lon = "";
+                String starttm = "";
+                String endtm = "";
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd");
                 Calendar calendar = Calendar.getInstance();
@@ -65,7 +67,7 @@ public class AddDiaryUser extends AppCompatActivity {
                 dialog.show();
                 keyUnique = reference.push().getKey();
 
-                ModelDiary modelDiary = new ModelDiary(title, description, fixDate, keyUnique,lat, lon, updater);
+                ModelDiary modelDiary = new ModelDiary(title, description, fixDate, keyUnique,lat, lon, starttm, endtm, updater);
                 reference.child(keyUnique).setValue(modelDiary).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
