@@ -149,6 +149,7 @@
             android:layout_marginStart="286dp"
             android:layout_marginBottom="1dp"
             android:contentDescription="@string/todo_add"
+            android:enabled="false"
             android:src="@drawable/photo"
             app:rippleColor="@color/teal_200"
             tools:ignore="ImageContrastCheck" />
