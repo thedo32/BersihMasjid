@@ -34,6 +34,7 @@
             android:textColorHint="@color/black"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/email"
+            android:minHeight="60dp"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,23 +43,31 @@
             android:inputType="textEmailAddress"
             tools:ignore="VisualLintTextFieldSize" />
 
-        <EditText
-            android:id="@+id/password"
-            android:hint="@string/password_hint"
-            android:text="@string/password"
-            android:textColor="@color/black"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@color/black"
-            android:textColorHint="@color/black"
-            android:drawablePadding="5dp"
-            android:drawableStart="@drawable/password"
-            android:layout_marginTop="20dp"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_text_white"
-            android:autofillHints="Password"
-            android:inputType="textPassword"
-            tools:ignore="VisualLintTextFieldSize" />
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:autofillHints="Password"
+                android:background="@drawable/custom_text_white"
+                android:cursorVisible="true"
+                android:drawableStart="@drawable/password"
+                android:drawablePadding="5dp"
+                android:inputType="textPassword"
+                android:text="@string/password"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textCursorDrawable="@color/black"
+                tools:ignore="VisualLintTextFieldSize" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/signin"
