@@ -52,7 +52,7 @@
             <Button
                 android:id="@+id/calendar"
                 android:text="Tambah Ke Kalender"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:background="@drawable/custom_button"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/teal_200"
