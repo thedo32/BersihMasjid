@@ -71,37 +71,38 @@
 
         <Button
             android:id="@+id/signin"
-            android:text="@string/login"
-            android:textSize="20sp"
-            android:background="@drawable/custom_button"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/teal_200"
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/custom_button"
+            android:backgroundTint="@color/white"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             tools:ignore="VisualLintButtonSize" />
 
         <Button
             android:id="@+id/signup"
-            android:text="@string/register"
-            android:textSize="20sp"
-            android:background="@drawable/custom_button"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/teal_200"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_button"
+            android:backgroundTint="@color/white"
+            android:text="DAFTAR DULU"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             tools:ignore="VisualLintButtonSize" />
+
         <Button
             android:id="@+id/reset"
-            android:text="@string/lupa_password"
-            android:textSize="20sp"
-            android:background="@drawable/custom_button"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/teal_200"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_button"
+            android:backgroundTint="@color/white"
+            android:text="@string/lupa_password"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>

@@ -8,11 +8,11 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'com.app.bersihmasjid'
+    namespace 'com.app.ikafeunand'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.app.bersihmasjid"
+        applicationId "com.app.ikafeunand"
         minSdk 21
         targetSdk 33
         versionCode 1

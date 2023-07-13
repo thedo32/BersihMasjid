@@ -6,30 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/useradmin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:text="@string/administrasi_user"
-        android:background ="@drawable/custom_text_white"
-        android:textAlignment="center"
-        android:textSize="15sp"
-        android:textColor="@color/teal_200"
-        tools:ignore="VisualLintOverlap" />
-
     <TextView
         android:id="@+id/welcome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/teal_200"
-        android:paddingTop="70dp"
+        android:paddingTop="10dp"
         android:text="@string/administrator_dashboard"
         android:textAlignment="center"
         android:textColor="@color/purple_700"
         android:textSize="12sp"
+        tools:ignore="VisualLintOverlap" />
+
+    <Button
+        android:id="@+id/useradmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/custom_text_white"
+        android:text="@string/administrasi_user"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         tools:ignore="VisualLintOverlap" />
 
 
@@ -37,48 +37,62 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginBottom="1dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_diary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="388dp"
+            android:layout_height="519dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="120dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp" />
 
-        <TextView
-            android:id="@+id/no_item"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center_horizontal"
-            android:text="@string/no_item_to_show"
-            android:textColor="@color/black"
-            android:visibility="gone" />
+            android:layout_height="82dp"
+            android:layout_marginTop="638dp"
+            android:background="@color/purple_500_mod">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:contentDescription="@string/todo_logout"
-            android:src="@drawable/logout"
-            app:rippleColor="@color/teal_200"
-            tools:ignore="ImageContrastCheck" />
+            <TextView
+                android:id="@+id/no_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:text="@string/no_item_to_show"
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:contentDescription="@string/todo_add"
-            android:enabled="true"
-            android:src="@drawable/add_floating24"
-            app:rippleColor="@color/teal_200" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/todo_logout"
+                android:src="@drawable/logout"
+                app:rippleColor="@color/teal_200"
+                tools:ignore="ImageContrastCheck" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="295dp"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/todo_add"
+                android:enabled="true"
+                android:src="@drawable/add_floating24"
+                app:rippleColor="@color/teal_200" />
+
+
+        </RelativeLayout>
 
 
     </RelativeLayout>

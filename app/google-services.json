@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "245653185648",
-    "firebase_url": "https://bersihmasjid-60595-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "bersihmasjid-60595",
-    "storage_bucket": "bersihmasjid-60595.appspot.com"
+    "project_number": "700758499859",
+    "firebase_url": "https://ikafeua-1371.firebaseio.com",
+    "project_id": "ikafeua-1371",
+    "storage_bucket": "ikafeua-1371.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:245653185648:android:38403d54393133049240b5",
+        "mobilesdk_app_id": "1:700758499859:android:bebce1fc3644046c2755e6",
         "android_client_info": {
-          "package_name": "com.app.bersihmasjid"
+          "package_name": "com.app.ikafeunand"
         }
       },
       "oauth_client": [
         {
-          "client_id": "245653185648-4s8d35rtp8otel25tklb2it89fd8hvg4.apps.googleusercontent.com",
+          "client_id": "700758499859-j0a0lvvmbsr8vkk76our8hluikjaoqg7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyALzrE8SoUjGjkJeSgu6ezP9N53_2NzfFo"
+          "current_key": "AIzaSyBgxSRdxLTVwQRw5_zptrq3riqabzoPs7I"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "245653185648-4s8d35rtp8otel25tklb2it89fd8hvg4.apps.googleusercontent.com",
+              "client_id": "700758499859-j0a0lvvmbsr8vkk76our8hluikjaoqg7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

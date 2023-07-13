@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="jurusan_array">
+        <item>Akuntansi</item>
+        <item>D3</item>
+        <item>IE(IESP)</item>
+        <item>Manajemen</item>
+        <item>Profesi</item>
+        <item>S2</item>
+        <item>S3</item>
+    </string-array>
+</resources>

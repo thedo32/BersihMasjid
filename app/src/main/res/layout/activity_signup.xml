@@ -10,54 +10,112 @@
     tools:context=".SignUpActivity">
 
     <LinearLayout
-        android:padding="20dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <TextView
-            android:text="@string/sign_up"
-            android:textColor="@color/purple_700"
-            android:textSize="30sp"
-            android:layout_marginTop="40dp"
-            android:gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
         <EditText
             android:id="@+id/name"
-            android:hint="@string/name"
-            android:maxLength="25"
-            android:inputType="textCapWords"
-            android:cursorVisible="true"
-            android:drawablePadding="5dp"
-            android:minHeight="60dp"
-            android:drawableStart="@drawable/name"
-            android:layout_marginTop="20dp"
-            android:textCursorDrawable="@color/black"
-            android:textColorHint="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_text_white"
             android:autofillHints="name"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawableStart="@drawable/name"
+            android:drawablePadding="5dp"
+            android:hint="@string/name"
+            android:inputType="textCapWords"
+            android:maxLength="25"
+            android:minHeight="48dp"
+            android:textColorHint="@color/creme"
+            android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize" />
 
         <EditText
             android:id="@+id/email"
-            android:hint="@string/email_hint"
-            android:cursorVisible="true"
-            android:drawablePadding="5dp"
-            android:drawableStart="@drawable/email"
-            android:layout_marginTop="20dp"
-            android:minHeight="60dp"
-            android:textCursorDrawable="@color/black"
-            android:textColorHint="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_text_white"
-            android:inputType="textEmailAddress"
+            android:layout_marginTop="10dp"
             android:autofillHints="emailAddress"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawableStart="@drawable/email"
+            android:drawablePadding="5dp"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:textColorHint="@color/creme"
+            android:textCursorDrawable="@color/black"
             tools:ignore="VisualLintTextFieldSize" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/jurusan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:autofillHints="jurusan"
+                android:background="@drawable/custom_text_white"
+                android:cursorVisible="true"
+                android:drawablePadding="5dp"
+                android:entries="@array/jurusan_array"
+                android:hint="Jurusan"
+                android:inputType="textCapWords"
+                android:maxLength="25"
+                android:minHeight="48dp"
+                android:textColorHint="@color/black"
+                android:textCursorDrawable="@color/black"
+                tools:ignore="VisualLintTextFieldSize" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/angkatan"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/jurusan"
+                android:layout_marginTop="10dp"
+                android:autofillHints="1992"
+                android:background="@drawable/custom_text_white"
+                android:cursorVisible="true"
+                android:drawableStart="@drawable/name"
+                android:drawablePadding="5dp"
+                android:entries="@array/angkatan_array"
+                android:hint="Angkatan (4 Digit)"
+                android:inputType="number"
+                android:maxLength="4"
+                android:minHeight="48dp"
+                android:textColorHint="@color/black"
+                android:textCursorDrawable="@color/black"
+                tools:ignore="VisualLintTextFieldSize" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/gender"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/jurusan"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="9dp"
+                android:layout_toEndOf="@id/angkatan"
+                android:autofillHints="Gender"
+                android:background="@drawable/custom_text_white"
+                android:cursorVisible="true"
+                android:drawablePadding="5dp"
+                android:entries="@array/gender_array"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:spinnerMode="dropdown"
+                android:textColorHint="@color/black"
+                android:textCursorDrawable="@color/black"
+                tools:ignore="VisualLintTextFieldSize" />
+        </RelativeLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -67,64 +125,95 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_height="60dp"
                 android:autofillHints="password"
                 android:background="@drawable/custom_text_white"
                 android:cursorVisible="true"
                 android:drawableStart="@drawable/password"
                 android:drawablePadding="5dp"
-                android:text="@string/password"
                 android:inputType="textPassword"
+                android:text="@string/password"
                 android:textColorHint="@color/black"
                 android:textCursorDrawable="@color/black"
                 tools:ignore="VisualLintTextFieldSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-<EditText
-        android:id="@+id/mobile"
-        android:hint="@string/telepon"
-        android:cursorVisible="true"
-        android:drawablePadding="5dp"
-        android:drawableStart="@drawable/phone"
-        android:layout_marginTop="20dp"
-        android:textCursorDrawable="@color/black"
-        android:textColorHint="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="60dp"
-        android:background="@drawable/custom_text_white"
-        android:inputType="phone"
-        android:importantForAutofill="no"
-        tools:ignore="VisualLintTextFieldSize" />
+        <EditText
+            android:id="@+id/mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawableStart="@drawable/phone"
+            android:drawablePadding="5dp"
+            android:hint="No. WhatsApp/Telepon"
+            android:importantForAutofill="no"
+            android:inputType="phone"
+            android:minHeight="48dp"
+            android:textColorHint="@color/creme"
+            android:textCursorDrawable="@color/black"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <EditText
+            android:id="@+id/alamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints="alamat"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawableStart="@drawable/name"
+            android:drawablePadding="5dp"
+            android:hint="Alamat"
+            android:inputType="textCapWords"
+            android:minHeight="48dp"
+            android:textColorHint="@color/creme"
+            android:textCursorDrawable="@color/black"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <EditText
+            android:id="@+id/pekerjaan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints="kerja"
+            android:background="@drawable/custom_text_white"
+            android:cursorVisible="true"
+            android:drawableStart="@drawable/name"
+            android:drawablePadding="5dp"
+            android:hint="Pekerjaan"
+            android:inputType="textCapWords"
+            android:minHeight="48dp"
+            android:textColorHint="@color/creme"
+            android:textCursorDrawable="@color/black"
+            tools:ignore="VisualLintTextFieldSize" />
 
 
         <Button
             android:id="@+id/signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/custom_button"
             android:backgroundTint="@color/white"
-            android:text="@string/register"
-            android:textColor="@color/teal_200"
+            android:text="SUBMIT DAFTAR"
+            android:textColor="@color/white"
             android:textSize="20sp"
             tools:ignore="VisualLintButtonSize" />
 
         <Button
             android:id="@+id/signin"
-            android:text="@string/loginback"
-            android:textSize="20sp"
-            android:background="@drawable/custom_button"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/teal_200"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_button"
+            android:backgroundTint="@color/white"
+            android:text="@string/loginback"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             tools:ignore="VisualLintButtonSize" />
-
-
 
 
     </LinearLayout>
